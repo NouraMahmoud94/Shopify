@@ -1,6 +1,14 @@
 describe('Tranquilo Matcha Search Functionality', () => {
   beforeEach(() => {
     cy.visit('https://tranquilomatcha.com');  // Store homepage
+    cy.get('body').then(($body) => {
+      if ($body.find('shopify-pc__banner').length > 0) {
+        cy.log('Pop-up found. Closing the pop-up.');
+        cy.get('shopify-pc__banner__btn-accept', { timeout: 10000 }).click();
+      } else {
+        cy.log('No pop-up found. Continuing with the test.');
+      }
+    });
 
   });
 
@@ -10,9 +18,6 @@ describe('Tranquilo Matcha Search Functionality', () => {
     // Search for a product
     cy.get('#shopify-section-sections--20638601380184__header > sticky-header > header > details-modal', { timeout: 10000 }).type(`${searchTerm}{enter}`);
 
-
-    // Handle pop-up if it appears
-    cy.handlePopup();
 
     // Wait for the search bar to appear and interact with
     cy.get('#shopify-section-sections--20638601380184__header > sticky-header > header > details-modal', {timeout: 10000})
