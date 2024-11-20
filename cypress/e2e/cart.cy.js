@@ -1,45 +1,120 @@
-describe('Tranquilo Matcha Cart Functionality', () => {
-  beforeEach(() => {
-    cy.visit('https://tranquilomatcha.com/collections/shop');  // Store homepage
+import { Selectors } from '../support/selectors';
 
-    // Handle pop-up if it appears
-    cy.handlePopup();
+describe('Tranquilo Matcha Cart Functionality', () => {
+  // Set implicit timeout for all Cypress commands
+  Cypress.config('defaultCommandTimeout', 10000);
+
+  let searchTerms = []; // Declare searchTerms at the suite level
+
+  beforeEach(() => {
+    // Load fixture data before each test
+    cy.fixture('testData').then((data) => {
+      searchTerms = data.searchTerms;  // Assign searchTerms inside the fixture callback
+    });
+
+    // Visit homepage before each test
+    cy.visit('/');
+    // Check for and interact with the cookie banner if present
+    cy.handleCookiesAndPopups();
+  });
+
+  it('should allow users to navigate to the cart', () => {
+    cy.visit('/cart');
+    cy.get(Selectors.cartItem, { timeout: 10000 })  // Explicit timeout for critical element
+        .should('have.length', 0);
   });
 
   it('should allow users to add a product to the cart', () => {
-    const searchTerm = 'matcha';
+    // Iterate over each search term from fixture data
+    searchTerms.forEach((searchTerm) => {
+      // Search for a product using the search modal
+      cy.get(Selectors.popupModal, { timeout: 10000 })
+          .type(`${searchTerm}{enter}`);
 
+      // Select the first product from the search results dropdown
+      cy.get(Selectors.searchResultsList, { timeout: 10000 })
+          .first()
+          .click();
 
-    // Search for a product
-    cy.get('#shopify-section-sections--20638601380184__header > sticky-header > header > details-modal', { timeout: 10000 }).type(`${searchTerm}{enter}`);
-
-    // Wait for the search bar to appear and interact with
-    cy.get('#shopify-section-sections--20638601380184__header > sticky-header > header > details-modal', {timeout: 10000})
-        .should('be.visible')
-        .type(`${searchTerm}{enter}`);
-
-    // Wait for search results and verify they contain the search term
-    cy.get('#predictive-search-results-products-list', { timeout: 15000 })
-        .should('have.length.greaterThan', 0);  // Verify there are search results
-
-
-    // Wait for the dropdown to appear and ensure it contains items
-    cy.get('#predictive-search-results-products-list')
-        .first() // Select the first item
-        .click(); // Click the first product in the dropdown
-
-    // Assert that the product detail page has loaded
-    cy.url().should('include', '/products/');
-
-    // Wait for the "Add to Cart" button to be visible and click it
-    cy.get('#ProductSubmitButton-template--20911156134232__main').scrollIntoView();
-    cy.get('#ProductSubmitButton-template--20911156134232__main', { timeout: 10000 })  // Locator for Add to Cart button
-        .should('be.visible')
-        .click();
-
-    // Wait for the cart count to update and assert it has increased
-    cy.get('#cart-icon-bubble', { timeout: 10000 })  // Locator for cart count icon
-        .should('be.visible')
-        .should('not.have.text', '0');  // Ensure the cart count is updated
+      // Wait for the "Add to Cart" button to be visible and then click it
+      cy.get(Selectors.productAddToCartButton, { timeout: 1000 })
+          .scrollIntoView()
+          .should('be.visible')
+          .click();
+    });
   });
+
+  it('should display the Added to Cart notification', () => {
+    // Iterate over each search term from fixture data
+    searchTerms.forEach((searchTerm) => {
+      cy.get(Selectors.popupModal, { timeout: 10000 })
+          .type(`${searchTerm}{enter}`);
+
+      cy.get(Selectors.searchResultsList, { timeout: 10000 })
+          .first()
+          .click();
+
+      cy.get(Selectors.productAddToCartButton, { timeout: 15000 })
+          .should('be.visible')
+          .click();
+
+      // Verify the "Added to Cart Notification" detail Popup
+      cy.get(Selectors.addedToCartModal, { timeout: 15000 })
+          .should('be.visible');
+
+
+    });
+  });
+
+  it('should display the cart icon with added products', () => {
+    // Iterate over each search term from fixture data
+    searchTerms.forEach((searchTerm) => {
+      cy.get(Selectors.popupModal, { timeout: 10000 })
+          .type(`${searchTerm}{enter}`);
+
+      cy.get(Selectors.searchResultsList, { timeout: 10000 })
+          .first()
+          .click();
+
+      cy.get(Selectors.productAddToCartButton, { timeout: 10000 })
+          .scrollIntoView()
+          .should('be.visible')
+          .click();
+
+      // Wait for the cart count to update and assert it has increased
+      cy.get(Selectors.cartIconBubble, { timeout: 10000 })
+          .should('be.visible')  // Ensure the cart icon is visible
+          .should('not.have.text', '0');
+    });
+  });
+
+  it('should display the cart with added products', () => {
+    // Iterate over each search term from fixture data
+    searchTerms.forEach((searchTerm) => {
+      cy.get(Selectors.popupModal, { timeout: 10000 })
+          .type(`${searchTerm}{enter}`);
+
+      cy.get(Selectors.searchResultsList, { timeout: 10000 })
+          .last()
+          .click();
+
+      cy.get(Selectors.productAddToCartButton, { timeout: 10000 })
+          .scrollIntoView()
+          .should('be.visible')
+          .click();
+
+      // Wait for the "Add to Cart" button to be visible and then click it
+      cy.get(Selectors.productAddToCartButton, { timeout: 10000 })
+          .scrollIntoView()
+          .should('be.visible')
+          .click();
+
+      // Wait for the cart count to update and assert it has increased
+      cy.get(Selectors.cartIconBubble, { timeout: 10000 })
+          .should('be.visible')  // Ensure the cart icon is visible
+          .should('not.have.text', '0')
+          .click();
+    });
+  });
+
 });

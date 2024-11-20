@@ -1,63 +1,86 @@
+import { Selectors } from '../support/selectors';
+
 describe('Tranquilo Matcha Checkout Functionality', () => {
+  // Set implicit timeout for all Cypress commands
+  Cypress.config('defaultCommandTimeout', 10000);
+
+  let searchTerms = []; // Declare searchTerms at the suite level
+
   beforeEach(() => {
-    cy.visit('https://tranquilomatcha.com');  // Store homepage
+    // Load fixture data before each test
+    cy.fixture('testData').then((data) => {
+      searchTerms = data.searchTerms;
+    });
 
-    // Handle pop-up if it appears
-    cy.handlePopup();
+    // Visit homepage before each test
+    cy.visit('/');
+    // Check for and interact with the cookie banner if present
+    cy.handleCookiesAndPopups();
   });
 
-  it('should allow users to add a product to the cart', () => {
-    const searchTerm = 'matcha';
+
+    it(`should allow users to proceed to checkout`, () => {
+
+     // Search for the product using the search term from the fixture
+      searchTerms.forEach((searchTerm) => {
+        cy.get(Selectors.popupModal, { timeout: 10000 })
+            .type(`${searchTerm}{enter}`);
+
+      // Wait for search results to load and verify that results are present
+      cy.get(Selectors.searchResultsList, { timeout: 20000 }) // Timeout for search results
+          .should('have.length.greaterThan', 0); // Assert that results are shown
+
+      // Select and click the first product from the search results
+      cy.get(Selectors.searchResultsList)
+          .first() // Get the first result
+          .click(); // Click on the product link
+
+      // Add the selected product to the cart
+      cy.get(Selectors.productAddToCartButton, { timeout: 12000 }) // Timeout for the 'Add to Cart' button
+          .scrollIntoView() // Smooth scroll into view for visibility
+          .should('be.visible') // Ensure the button is visible
+          .click(); // Click the 'Add to Cart' button
+
+      // Verify that the "Added to Cart Notification" modal appears
+      cy.get(Selectors.addedToCartModal, { timeout: 10000 }) // Timeout for the modal visibility
+          .should('be.visible'); // Ensure the modal is visible
+
+      // Close the "Added to Cart Notification" modal
+      cy.get(Selectors.closeAddedToCartModal, { timeout: 10000 }) // Timeout for closing modal
+          .should('be.visible') // Ensure the close button is visible
+          .click(); // Close the modal
+
+      // Navigate to the cart
+      cy.get(Selectors.cartIconBubble, { timeout: 10000 }) // Timeout for the cart icon visibility
+          .click(); // Click on the cart icon
+
+      // Verify that the cart summary is visible
+      cy.get(Selectors.cartSummary, { timeout: 10000 }) // Timeout for cart summary visibility
+          .should('be.visible'); // Ensure cart summary is visible
+
+      // Scroll down to the cart footer for a smoother user experience
+      cy.get(Selectors.cartFooter, { timeout: 10000 }) // Timeout for cart footer visibility
+          .scrollIntoView();
+
+      // Proceed to checkout
+      cy.get(Selectors.checkoutButton, { timeout: 10000 }) // Timeout for checkout button visibility
+          .should('be.visible') // Ensure the checkout button is visible
+          .click(); // Click the checkout button
+
+      // Assert that the checkout page is loaded
+      cy.url().should('include', '/checkout'); // Check if the checkout page URL is loaded
+
+        // Assert that the checkout page is loaded
+        cy.url().should('include', '/checkouts'); // Check if the checkout page URL is loaded
+
+        // Verify that the checkout page elements are visible
+        cy.get(Selectors.checkoutMain, { timeout: 10000 }).should('be.visible');
+        cy.get(Selectors.payButton, { timeout: 10000 }) // Timeout for payment button visibility
+            .scrollIntoView()
+            .should('be.visible'); // Ensure the payment button is visible
+    });
+    });
+
+ });
 
 
-    // Search for a product
-    cy.get('#shopify-section-sections--20638601380184__header > sticky-header > header > details-modal', { timeout: 10000 }).type(`${searchTerm}{enter}`);
-
-    // Wait for the search bar to appear and interact with
-    cy.get('#shopify-section-sections--20638601380184__header > sticky-header > header > details-modal', {timeout: 10000})
-        .should('be.visible')
-        .type(`${searchTerm}{enter}`);
-
-    // Wait for search results and verify they contain the search term
-    cy.get('#predictive-search-results-products-list', { timeout: 15000 })
-        .should('have.length.greaterThan', 0);  // Verify there are search results
-
-
-    // Wait for the dropdown to appear and ensure it contains items
-    cy.get('#predictive-search-results-products-list')
-        .first() // Select the first item
-        .click(); // Click the first product in the dropdown
-
-    // Assert that the product detail page has loaded
-    cy.url().should('include', '/products/');
-
-    // Wait for the "Add to Cart" button to be visible and click it
-    cy.get('#ProductSubmitButton-template--20911156134232__main').scrollIntoView();
-    cy.get('#ProductSubmitButton-template--20911156134232__main', { timeout: 10000 })  // Locator for Add to Cart button
-        .should('be.visible')
-        .click();
-
-    // Wait for the cart count to update and assert it has increased
-    cy.get('#cart-icon-bubble', { timeout: 10000 })  // Locator for cart count icon
-        .should('be.visible')
-        .should('not.have.text', '0');  // Ensure the cart count is updated
-
-    // Go to the cart
-    cy.get('#cart-icon-bubble', { timeout: 10000 }).click();
-
-    // Wait for the cart page to load and ensure the cart summary is visible
-    cy.get('#shopify-section-template--20638600823128__cart-items > cart-items', { timeout: 10000 })  // Locator for cart summary
-        .should('be.visible');
-
-    // Proceed to checkout
-    cy.get('#checkout').scrollIntoView();
-    cy.get('#checkout').click();
-
-    // Assert that the checkout page is loaded
-    cy.url().should('include', '/checkout');
-
-    // Verify checkout elements are visible (e.g., shipping address, payment method)
-    cy.get('˜#checkout-main', { timeout: 10000 }).should('be.visible');
-
-  });
-});

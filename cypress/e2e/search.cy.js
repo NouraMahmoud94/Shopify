@@ -1,38 +1,65 @@
+import { Selectors } from '../support/selectors';
+
 describe('Tranquilo Matcha Search Functionality', () => {
+  // Set implicit timeout for all Cypress commands
+  Cypress.config('defaultCommandTimeout', 10000);
+
+  let searchTerms = []; // Declare searchTerms at the suite level
+
   beforeEach(() => {
-    cy.visit('https://tranquilomatcha.com');  // Store homepage
-    cy.get('body').then(($body) => {
-      if ($body.find('shopify-pc__banner').length > 0) {
-        cy.log('Pop-up found. Closing the pop-up.');
-        cy.get('shopify-pc__banner__btn-accept', { timeout: 10000 }).click();
-      } else {
-        cy.log('No pop-up found. Continuing with the test.');
-      }
+    // Load fixture data before each test
+    cy.fixture('testData').then((data) => {
+      searchTerms = data.searchTerms;  // Assign searchTerms inside the fixture callback
     });
 
+    // Visit homepage before each test
+    cy.visit('/');
+    // Check for and interact with the cookie banner if present
+    cy.handleCookiesAndPopups();
+  });
+
+  it('should display the search bar', () => {
+    cy.get(Selectors.searchBar, { timeout: 10000 }) // Reduced timeout as search bar is critical
+        .should('be.visible');
   });
 
   it('should allow users to search for a product', () => {
-    const searchTerm = 'matcha';
+    // Iterate through search terms from the fixture data
+    searchTerms.forEach((term) => {
+      // Search for each term
+      cy.get(Selectors.searchBar, { timeout: 15000 })
+          .should('be.visible')
+          .type(`${term}{enter}`, { delay: 200 }); // Simulate user typing with delay
+    });
+  });
 
-    // Search for a product
-    cy.get('#shopify-section-sections--20638601380184__header > sticky-header > header > details-modal', { timeout: 10000 }).type(`${searchTerm}{enter}`);
+  it('should display the list of search results', () => {
+    // Iterate through search terms from the fixture data
+    searchTerms.forEach((term) => {
+      cy.get(Selectors.searchBar, { timeout: 15000 })
+          .should('be.visible')
+          .type(`${term}{enter}`, { delay: 200 });
 
+      // Wait for search results to load and verify results are displayed
+      cy.get(Selectors.searchResultsList, { timeout: 20000 })
+          .should('have.length.greaterThan', 0); // Assert results exist
+    });
+  });
 
-    // Wait for the search bar to appear and interact with
-    cy.get('#shopify-section-sections--20638601380184__header > sticky-header > header > details-modal', {timeout: 10000})
-        .should('be.visible')
-        .type(`${searchTerm}{enter}`);
+  it('should navigate to the product page', () => {
+    // Iterate through search terms from the fixture data
+    searchTerms.forEach((term) => {
+      cy.get(Selectors.searchBar, { timeout: 15000 })
+          .should('be.visible')
+          .type(`${term}{enter}`, { delay: 200 });
 
-    // Wait for search results and verify they contain the search term
-    cy.get('#predictive-search-results-products-list', { timeout: 15000 })
-        .should('have.length.greaterThan', 0);  // Verify there are search results
+      // Click the first search result
+      cy.get(Selectors.firstSearchResult, { timeout: 10000 })
+          .should('be.visible') // Ensure the first result is visible
+          .click();
 
-
-    // Wait for the dropdown to appear and ensure it contains items
-    cy.get('#predictive-search-results-products-list')
-        .first() // Select the first item
-        .click(); // Click the first product in the dropdown
-
+      // Verify navigation to the product page
+      cy.url().should('include', '/products/');
+    });
   });
 });

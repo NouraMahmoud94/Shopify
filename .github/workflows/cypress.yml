@@ -1,0 +1,62 @@
+name: Run Cypress Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  cypress-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Cypress tests
+        run: npm run test
+
+      - name: Upload test artefacts
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-failures
+          path: |
+            cypress/videos/
+            cypress/screenshots/
+
+      - name: Send email notification on failure
+        if: failure()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "🚨 Cypress Test Suite Failure"
+          body: |
+            Hi Team,
+
+            The Cypress test suite has failed. Please review the attached artefacts for debugging.
+            You can access the videos and screenshots via the GitHub Actions artefacts.
+
+            Repository: ${{ github.repository }}
+            Workflow: ${{ github.workflow }}
+            Run: ${{ github.run_id }}
+            Triggered by: ${{ github.actor }}
+
+            Thanks,
+            GitHub Actions
+          to: Noura.mahmoud.mustafa@gmail.com
+          from: ci-bot@example.com
