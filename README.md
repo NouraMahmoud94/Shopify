@@ -43,13 +43,15 @@ Ensure that the following software is installed on your system:
 ### 1. **Clone the Repository**
 
 Clone the repository to your local machine using the following command:
-
+https://github.com/NouraMahmoud94/Shopify.git
 
 ## **Run**
-
  1- Clone Shopify repository.
+ 
  2- Import project to intelliJ IDEA.
+ 
  3- Open Terminal from intelliJ IDEA.
+ 
  4- Run : npm run test
 
 **Note on Ongoing Enhancements**
