@@ -6,18 +6,27 @@ Welcome to the **End-to-End (E2E) Testing** project for the **Tranquilo Matcha**
 
 ## **Objective**
 
-This project automates the testing of a Shopify store, **Tranquilo Matcha**, by implementing basic user flow tests using **Cypress**. The solution also includes integration with a **CI pipeline** to automatically run tests and notify the team of any failures via **email**.
+This project automates the testing of a Shopify store, **Tranquilo Matcha**, by implementing basic user flow tests of Home, Search, Cart, Checkout Functionality using **Cypress**. The solution also includes integration with a **CI pipeline** to automatically run tests and notify the team of any failures via **email**.
 
 ---
 
 ## **Project Structure**
 
 - **`e2e/`**: Contains all the Cypress end-to-end test scripts.
-- **`cypress.json`**: The Cypress configuration file.
+- **`cypress.config.js`**: The Cypress configuration file.
+- **`support/commands.js`**: The Cypress commands file.
+- **`selectors.js`**: all elements selectors file.
 - **`package.json`**: Contains the project dependencies and custom scripts.
-- **`notifications/`**: This folder contains the configuration for email notifications upon test failures.
+- **`/screenshots`**: Contains all the screenshots of failed tests.
+- **`/.github`**: This folder contains the configuration for email notifications upon test failures.
   
 ---
+
+## **Test Suite Details**: 
+- Home
+- Search
+- Cart
+- checkout
 
 ## **Pre-requisites**
 
@@ -35,6 +44,14 @@ Ensure that the following software is installed on your system:
 
 Clone the repository to your local machine using the following command:
 
-```bash
-git clone https://github.com/your-repository-url.git
-cd your-repository-folder
+
+## **Run**
+
+  1- Clone Shopify repository.
+  2- Import project to intelliJ IDEA.
+  3- Open Terminal from intelliJ IDEA.
+  4- Run : npm run test
+
+**Note on Ongoing Enhancements**
+The project is still undergoing enhancements and improvements.
+Recently, Tranquilo Matcha website underwent some updates, which have affected a few of the test cases and their reliability. Some test suites might not be working as expected due to these recent changes, and I am actively working on updating and enhancing the test scripts to reflect these changes.
