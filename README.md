@@ -2,13 +2,9 @@
 
 Welcome to the **End-to-End (E2E) Testing** project for the **Tranquilo Matcha** Shopify store! This repository contains a set of automated tests built using the **Cypress** testing framework, designed to ensure that key functionalities of the website work as expected. Additionally, it includes setup instructions for **CI integration** and **email notifications** in case of test failures.
 
----
-
 ## **Objective**
 
 This project automates the testing of a Shopify store, **Tranquilo Matcha**, by implementing basic user flow tests of Home, Search, Cart, Checkout Functionality using **Cypress**. The solution also includes integration with a **CI pipeline** to automatically run tests and notify the team of any failures via **email**.
-
----
 
 ## **Project Structure**
 
@@ -20,8 +16,6 @@ This project automates the testing of a Shopify store, **Tranquilo Matcha**, by 
 - **`/screenshots`**: Contains all the screenshots of failed tests.
 - **`/.github`**: This folder contains the configuration for email notifications upon test failures.
   
----
-
 ## **Test Suite Details**: 
 - Home
 - Search
@@ -36,7 +30,6 @@ Ensure that the following software is installed on your system:
 - **npm** (Node Package Manager)
 - **Cypress** (automated end-to-end testing framework)
 
----
 
 ## **Installation & Setup**
 
