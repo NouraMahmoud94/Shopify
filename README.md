@@ -50,7 +50,7 @@ https://github.com/NouraMahmoud94/Shopify.git
 
  4- Run from the Cypress UI : npx cypress open 
  
- OR  Run : npm run test
+ OR  Run :  node run-tests.js
 
 **Note on Ongoing Enhancements**
 
