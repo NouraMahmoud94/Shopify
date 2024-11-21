@@ -5,22 +5,23 @@ describe('Tranquilo Matcha Search Functionality', () => {
     let searchTerms = [];
 
     beforeEach(() => {
-        // Load fixture data before each test
+        // Load fixture data before each test, which contains search terms for testing
         cy.fixture('testData').then((data) => {
             searchTerms = data.searchTerms; // Assign searchTerms inside the fixture callback
             cy.log('Search terms loaded:', JSON.stringify(searchTerms));
         });
 
-        // Visit homepage before each test
+        // Visit homepage before each test to start from a clean state
         cy.visit('/');
         cy.log('🏠 Visited homepage');
 
-        // Handle cookie banner or other popups if necessary
+        // Handle any cookies, popups, or banners that might appear on the page
         cy.handleCookiesAndPopups();
         cy.log('🍪 Handled cookies and popups if present');
     });
 
     it('should display the search bar', () => {
+        // Ensure that the search bar is visible on the homepage
         cy.get(Selectors.searchBar, { timeout: 10000 })
             .should('be.visible')
             .then(() => {
@@ -31,11 +32,12 @@ describe('Tranquilo Matcha Search Functionality', () => {
                     throw error;
                 }
             });
-        cy.pause(); // Pause here to inspect if the test is failing
     });
 
     it('should allow users to search for a product', () => {
+        // For each search term, check if the search bar is visible and perform the search
         searchTerms.forEach((term) => {
+            // Ensure that the search bar is visible for the current search term
             cy.get(Selectors.searchBar, { timeout: 10000 })
                 .should('be.visible')
                 .then(() => {
@@ -47,6 +49,7 @@ describe('Tranquilo Matcha Search Functionality', () => {
                     }
                 });
 
+            // Type the search term in the popup modal and simulate pressing Enter
             cy.get(Selectors.popupModal, { timeout: 50000 })
                 .type(`${term}{enter}`, { delay: 200 })
                 .then(() => {
@@ -57,19 +60,21 @@ describe('Tranquilo Matcha Search Functionality', () => {
                         throw error;
                     }
                 });
-
-            cy.pause(); // Pause here to inspect the modal
         });
     });
 
     it('should display the list of search results', () => {
+        // For each search term, ensure that search results are displayed after typing the term
         searchTerms.forEach((term) => {
+            // Ensure the search bar is visible before starting the search
             cy.get(Selectors.searchBar, { timeout: 10000 })
                 .should('be.visible');
 
+            // Type the search term in the popup modal and trigger the search
             cy.get(Selectors.popupModal, { timeout: 50000 })
                 .type(`${term}{enter}`);
 
+            // Verify that search results are displayed and the results list is not empty
             cy.get(Selectors.searchResultsList, { timeout: 20000 })
                 .should('have.length.greaterThan', 0)
                 .then((results) => {
@@ -80,18 +85,21 @@ describe('Tranquilo Matcha Search Functionality', () => {
                         throw error;
                     }
                 });
-            cy.pause(); // Pause here to inspect the results
         });
     });
 
     it('should navigate to the product page', () => {
+        // For each search term, click the first search result and navigate to the product page
         searchTerms.forEach((term) => {
+            // Ensure the search bar is visible before starting the search
             cy.get(Selectors.searchBar, { timeout: 10000 })
                 .should('be.visible');
 
+            // Type the search term in the popup modal and trigger the search
             cy.get(Selectors.popupModal, { timeout: 50000 })
                 .type(`${term}{enter}`);
 
+            // Click on the first search result from the list
             cy.get(Selectors.firstSearchResult, { timeout: 50000 })
                 .should('be.visible', { timeout: 50000 })
                 .click()
@@ -104,6 +112,7 @@ describe('Tranquilo Matcha Search Functionality', () => {
                     }
                 });
 
+            // Verify that the URL has changed to the product page
             cy.url()
                 .should('include', '/products/')
                 .then(() => {
@@ -114,7 +123,6 @@ describe('Tranquilo Matcha Search Functionality', () => {
                         throw error;
                     }
                 });
-            cy.pause();
         });
     });
 });

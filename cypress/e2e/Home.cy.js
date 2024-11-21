@@ -3,18 +3,18 @@ import { Selectors } from '../support/selectors';
 describe('Homepage and Navigation Tests', () => {
 
     beforeEach(() => {
-        // Visit homepage before each test
+        // Visit the homepage before each test to ensure we start from a clean state
         cy.visit('/');
         cy.log('🏠 Visited homepage');
 
-        // Handle cookie banner or other popups if necessary
+        // Handle any cookies, popups, or banners that might appear on the page
         cy.handleCookiesAndPopups();
         cy.log('🍪 Handled cookies and popups if present');
     });
 
     it('should load the homepage successfully', () => {
-        // Ensure the homepage logo is visible, indicating the page has loaded
-        cy.get(Selectors.logo, { timeout: 10000 }) // Added timeout
+        // Check that the homepage logo is visible, indicating the page has loaded successfully
+        cy.get(Selectors.logo, { timeout: 10000 }) // Added timeout to ensure waiting for the logo if necessary
             .should('be.visible')
             .then(() => {
                 try {
@@ -24,12 +24,11 @@ describe('Homepage and Navigation Tests', () => {
                     throw error; // Rethrow the error to fail the test
                 }
             });
-        cy.pause();
     });
 
     it('should display the search input', () => {
-        // Check that the search bar is visible
-        cy.get(Selectors.searchBar, { timeout: 10000 }) // Added timeout
+        // Ensure the search bar is visible on the homepage
+        cy.get(Selectors.searchBar, { timeout: 10000 }) // Added timeout to ensure waiting for the search bar if necessary
             .should('be.visible')
             .then(() => {
                 try {
@@ -39,11 +38,10 @@ describe('Homepage and Navigation Tests', () => {
                     throw error;
                 }
             });
-        cy.pause(); // Pause to inspect the search bar visibility
     });
 
     it('should navigate to the Shop page when tab is clicked', () => {
-        // Click on the Shop navigation tab
+        // Simulate clicking the "Shop" navigation tab
         cy.get(Selectors.navTabs, { timeout: 10000 })
             .click()
             .then(() => {
@@ -55,7 +53,7 @@ describe('Homepage and Navigation Tests', () => {
                 }
             });
 
-        // Verify the URL
+        // Verify that the URL has changed and includes the 'shop' path
         cy.url({ timeout: 10000 })
             .should('include', 'shop')
             .then(() => {
@@ -66,11 +64,10 @@ describe('Homepage and Navigation Tests', () => {
                     throw error;
                 }
             });
-        cy.pause();
     });
 
     it('should load more content when scrolling down', () => {
-        // Scroll to the bottom of the page to trigger more content loading
+        // Scroll to the bottom of the page, triggering the loading of additional content
         cy.scrollTo('bottom', { timeout: 10000 })
             .then(() => {
                 try {
@@ -80,11 +77,10 @@ describe('Homepage and Navigation Tests', () => {
                     throw error;
                 }
             });
-        cy.pause();
     });
 
     it('should be able to navigate to different pages', () => {
-        // Click on a navigation tab and verify the URL
+        // Click on a navigation tab and verify that it leads to the correct URL
         cy.get(Selectors.navTabs, { timeout: 10000 })
             .click()
             .then(() => {
@@ -96,6 +92,7 @@ describe('Homepage and Navigation Tests', () => {
                 }
             });
 
+        // Check that the URL has changed to the '/collections/shop' page
         cy.url({ timeout: 10000 })
             .should('include', '/collections/shop')
             .then(() => {
@@ -107,7 +104,7 @@ describe('Homepage and Navigation Tests', () => {
                 }
             });
 
-        // Navigate back to the previous page (homepage)
+        // Navigate back to the previous page (which should be the homepage)
         cy.go('back', { timeout: 10000 })
             .then(() => {
                 try {
@@ -117,6 +114,5 @@ describe('Homepage and Navigation Tests', () => {
                     throw error;
                 }
             });
-        cy.pause();
     });
 });

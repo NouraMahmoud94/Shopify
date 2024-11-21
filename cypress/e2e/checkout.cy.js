@@ -4,26 +4,27 @@ describe('Tranquilo Matcha Checkout Functionality', () => {
     let searchTerms = [];
 
     beforeEach(() => {
-        // Load fixture data before each test
+        // Load fixture data before each test to get the search terms
         cy.fixture('testData').then((data) => {
-            searchTerms = data.searchTerms; // Assign searchTerms inside the fixture callback
+            searchTerms = data.searchTerms; // Assign searchTerms from the fixture
             cy.log('📂 Search terms loaded:', JSON.stringify(searchTerms));
         });
 
-        // Visit homepage before each test
+        // Visit homepage before each test to ensure we start fresh
         cy.visit('/');
         cy.log('🏠 Visited homepage');
 
-        // Handle cookie banner or other popups if necessary
+        // Handle any cookie banners or popups that might appear on the page
         cy.handleCookiesAndPopups();
         cy.log('🍪 Handled cookies and popups if present');
     });
 
     it('should allow users to proceed to checkout', () => {
+        // For each search term, simulate the user journey to checkout
         searchTerms.forEach((term) => {
             cy.log(`🔍 Searching for term: ${term}`);
 
-            // Search for the product using the search term
+            // Step 1: Search for the product using the search term
             cy.get(Selectors.popupModal, { timeout: 10000 })
                 .type(`${term}{enter}`)
                 .then(() => {
@@ -35,7 +36,7 @@ describe('Tranquilo Matcha Checkout Functionality', () => {
                     }
                 });
 
-            // Wait for search results and verify
+            // Step 2: Wait for search results and verify they are loaded
             cy.get(Selectors.searchResultsList, { timeout: 20000 })
                 .should('have.length.greaterThan', 0)
                 .then(() => {
@@ -47,7 +48,7 @@ describe('Tranquilo Matcha Checkout Functionality', () => {
                     }
                 });
 
-            // Select the first product
+            // Step 3: Click on the first product from the search results
             cy.get(Selectors.searchResultsList)
                 .first()
                 .click()
@@ -60,7 +61,7 @@ describe('Tranquilo Matcha Checkout Functionality', () => {
                     }
                 });
 
-            // Add product to cart
+            // Step 4: Add the product to the cart
             cy.get(Selectors.productAddToCartButton, { timeout: 12000 })
                 .scrollIntoView()
                 .should('be.visible')
@@ -74,7 +75,7 @@ describe('Tranquilo Matcha Checkout Functionality', () => {
                     }
                 });
 
-            // Verify that the "Added to Cart Notification" modal appears
+            // Step 5: Verify that the "Added to Cart" modal appears
             cy.get(Selectors.addedToCartModal, { timeout: 10000 })
                 .should('be.visible')
                 .then(() => {
@@ -86,7 +87,7 @@ describe('Tranquilo Matcha Checkout Functionality', () => {
                     }
                 });
 
-            // Close the "Added to Cart Notification" modal
+            // Step 6: Close the "Added to Cart" modal
             cy.get(Selectors.closeAddedToCartModal, { timeout: 10000 })
                 .should('be.visible')
                 .click()
@@ -99,7 +100,7 @@ describe('Tranquilo Matcha Checkout Functionality', () => {
                     }
                 });
 
-            // Navigate to the cart
+            // Step 7: Navigate to the cart page
             cy.get(Selectors.cartIconBubble, { timeout: 10000 })
                 .click()
                 .then(() => {
@@ -111,7 +112,7 @@ describe('Tranquilo Matcha Checkout Functionality', () => {
                     }
                 });
 
-            // Verify that the cart summary is visible
+            // Step 8: Verify that the cart summary is visible
             cy.get(Selectors.cartSummary, { timeout: 10000 })
                 .should('be.visible')
                 .then(() => {
@@ -123,7 +124,7 @@ describe('Tranquilo Matcha Checkout Functionality', () => {
                     }
                 });
 
-            // Scroll down to the cart footer
+            // Step 9: Scroll down to the cart footer section
             cy.get(Selectors.cartFooter, { timeout: 10000 })
                 .scrollIntoView()
                 .then(() => {
@@ -135,7 +136,7 @@ describe('Tranquilo Matcha Checkout Functionality', () => {
                     }
                 });
 
-            // Proceed to checkout
+            // Step 10: Proceed to checkout
             cy.get(Selectors.checkoutButton, { timeout: 10000 })
                 .should('be.visible')
                 .click()
@@ -148,7 +149,7 @@ describe('Tranquilo Matcha Checkout Functionality', () => {
                     }
                 });
 
-            // Assert that the checkout page is loaded
+            // Step 11: Assert that the checkout page is loaded successfully
             cy.url()
                 .should('include', '/checkout')
                 .then(() => {
@@ -160,7 +161,7 @@ describe('Tranquilo Matcha Checkout Functionality', () => {
                     }
                 });
 
-            // Verify that the checkout page elements are visible
+            // Step 12: Verify that checkout page elements are visible
             cy.get(Selectors.checkoutMain, { timeout: 10000 })
                 .should('be.visible')
                 .then(() => {
@@ -185,6 +186,7 @@ describe('Tranquilo Matcha Checkout Functionality', () => {
                 });
         });
 
+        // Final log after all tests are executed
         cy.log('✅ Test completed successfully');
     });
 });
