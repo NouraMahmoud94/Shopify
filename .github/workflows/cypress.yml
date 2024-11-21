@@ -25,10 +25,13 @@ jobs:
         run: npm ci
 
       - name: Verify Base URL
-        run: curl -I https://tranquilomatcha.com
+        run: |
+          for i in {1..5}; do
+            curl -I https://tranquilomatcha.com && break || sleep 15;
+          done
 
       - name: Run Cypress tests in headless mode
-        run: npx cypress run --headless --browser chrome
+        run: DEBUG=cypress:* npx cypress run --headless --browser chrome
 
       - name: Upload test artefacts
         if: failure()
@@ -36,8 +39,8 @@ jobs:
         with:
           name: cypress-failures
           path: |
-            cypress/videos/
-            cypress/screenshots/
+            cypress/videos/*
+            cypress/screenshots/*
 
       - name: Send email notification on failure
         if: failure()
