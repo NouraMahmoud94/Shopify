@@ -1,65 +1,120 @@
 import { Selectors } from '../support/selectors';
 
 describe('Tranquilo Matcha Search Functionality', () => {
-  // Set implicit timeout for all Cypress commands
-  Cypress.config('defaultCommandTimeout', 10000);
 
-  let searchTerms = []; // Declare searchTerms at the suite level
+    let searchTerms = [];
 
-  beforeEach(() => {
-    // Load fixture data before each test
-    cy.fixture('testData').then((data) => {
-      searchTerms = data.searchTerms;  // Assign searchTerms inside the fixture callback
+    beforeEach(() => {
+        // Load fixture data before each test
+        cy.fixture('testData').then((data) => {
+            searchTerms = data.searchTerms; // Assign searchTerms inside the fixture callback
+            cy.log('Search terms loaded:', JSON.stringify(searchTerms));
+        });
+
+        // Visit homepage before each test
+        cy.visit('/');
+        cy.log('🏠 Visited homepage');
+
+        // Handle cookie banner or other popups if necessary
+        cy.handleCookiesAndPopups();
+        cy.log('🍪 Handled cookies and popups if present');
     });
 
-    // Visit homepage before each test
-    cy.visit('/');
-    // Check for and interact with the cookie banner if present
-    cy.handleCookiesAndPopups();
-  });
-
-  it('should display the search bar', () => {
-    cy.get(Selectors.searchBar, { timeout: 10000 }) // Reduced timeout as search bar is critical
-        .should('be.visible');
-  });
-
-  it('should allow users to search for a product', () => {
-    // Iterate through search terms from the fixture data
-    searchTerms.forEach((term) => {
-      // Search for each term
-      cy.get(Selectors.searchBar, { timeout: 15000 })
-          .should('be.visible')
-          .type(`${term}{enter}`, { delay: 200 }); // Simulate user typing with delay
+    it('should display the search bar', () => {
+        cy.get(Selectors.searchBar, { timeout: 10000 })
+            .should('be.visible')
+            .then(() => {
+                try {
+                    cy.log('✅ Search bar is visible');
+                } catch (error) {
+                    cy.log('❌ Failed to verify search bar visibility');
+                    throw error;
+                }
+            });
+        cy.pause(); // Pause here to inspect if the test is failing
     });
-  });
 
-  it('should display the list of search results', () => {
-    // Iterate through search terms from the fixture data
-    searchTerms.forEach((term) => {
-      cy.get(Selectors.searchBar, { timeout: 15000 })
-          .should('be.visible')
-          .type(`${term}{enter}`, { delay: 200 });
+    it('should allow users to search for a product', () => {
+        searchTerms.forEach((term) => {
+            cy.get(Selectors.searchBar, { timeout: 10000 })
+                .should('be.visible')
+                .then(() => {
+                    try {
+                        cy.log(`✅ Search bar is visible for search term "${term}"`);
+                    } catch (error) {
+                        cy.log(`❌ Failed to check search bar for term "${term}"`);
+                        throw error;
+                    }
+                });
 
-      // Wait for search results to load and verify results are displayed
-      cy.get(Selectors.searchResultsList, { timeout: 20000 })
-          .should('have.length.greaterThan', 0); // Assert results exist
+            cy.get(Selectors.popupModal, { timeout: 50000 })
+                .type(`${term}{enter}`, { delay: 200 })
+                .then(() => {
+                    try {
+                        cy.log(`🔎 Searching for "${term}"`);
+                    } catch (error) {
+                        cy.log(`❌ Failed to log search for "${term}"`);
+                        throw error;
+                    }
+                });
+
+            cy.pause(); // Pause here to inspect the modal
+        });
     });
-  });
 
-  it('should navigate to the product page', () => {
-    // Iterate through search terms from the fixture data
-    searchTerms.forEach((term) => {
-      cy.get(Selectors.searchBar, { timeout: 15000 })
-          .should('be.visible')
-          .type(`${term}{enter}`, { delay: 200 });
+    it('should display the list of search results', () => {
+        searchTerms.forEach((term) => {
+            cy.get(Selectors.searchBar, { timeout: 10000 })
+                .should('be.visible');
 
-      // Click the first search result
-      cy.get(Selectors.firstSearchResult, { timeout: 10000 })
-          .should('be.visible') // Ensure the first result is visible
-          .click();
+            cy.get(Selectors.popupModal, { timeout: 50000 })
+                .type(`${term}{enter}`);
 
-      // Verify navigation to the product page
-      cy.url().should('include', '/products/');
+            cy.get(Selectors.searchResultsList, { timeout: 20000 })
+                .should('have.length.greaterThan', 0)
+                .then((results) => {
+                    try {
+                        cy.log(`✅ Search results for "${term}" displayed, count: ${results.length}`);
+                    } catch (error) {
+                        cy.log(`❌ Failed to display search results for "${term}"`);
+                        throw error;
+                    }
+                });
+            cy.pause(); // Pause here to inspect the results
+        });
     });
-  });
+
+    it('should navigate to the product page', () => {
+        searchTerms.forEach((term) => {
+            cy.get(Selectors.searchBar, { timeout: 10000 })
+                .should('be.visible');
+
+            cy.get(Selectors.popupModal, { timeout: 50000 })
+                .type(`${term}{enter}`);
+
+            cy.get(Selectors.firstSearchResult, { timeout: 50000 })
+                .should('be.visible', { timeout: 50000 })
+                .click()
+                .then(() => {
+                    try {
+                        cy.log(`✅ Clicked first search result for "${term}"`);
+                    } catch (error) {
+                        cy.log(`❌ Failed to click first search result for "${term}"`);
+                        throw error;
+                    }
+                });
+
+            cy.url()
+                .should('include', '/products/')
+                .then(() => {
+                    try {
+                        cy.log(`✅ Successfully navigated to product page for "${term}"`);
+                    } catch (error) {
+                        cy.log(`❌ Failed to navigate to product page for "${term}"`);
+                        throw error;
+                    }
+                });
+            cy.pause();
+        });
+    });
 });

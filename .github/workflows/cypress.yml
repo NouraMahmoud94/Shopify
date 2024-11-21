@@ -22,10 +22,13 @@ jobs:
           node-version: 16
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Run Cypress tests
-        run: npm run test
+      - name: Verify Base URL
+        run: curl -I https://tranquilomatcha.com
+
+      - name: Run Cypress tests in headless mode
+        run: npx cypress run --headless --browser chrome
 
       - name: Upload test artefacts
         if: failure()
@@ -58,5 +61,5 @@ jobs:
 
             Thanks,
             GitHub Actions
-          to: Noura.mahmoud.mustafa@gmail.com
+          to: Example@example.com
           from: ci-bot@example.com

@@ -1,86 +1,190 @@
 import { Selectors } from '../support/selectors';
 
 describe('Tranquilo Matcha Checkout Functionality', () => {
-  // Set implicit timeout for all Cypress commands
-  Cypress.config('defaultCommandTimeout', 10000);
+    let searchTerms = [];
 
-  let searchTerms = []; // Declare searchTerms at the suite level
+    beforeEach(() => {
+        // Load fixture data before each test
+        cy.fixture('testData').then((data) => {
+            searchTerms = data.searchTerms; // Assign searchTerms inside the fixture callback
+            cy.log('📂 Search terms loaded:', JSON.stringify(searchTerms));
+        });
 
-  beforeEach(() => {
-    // Load fixture data before each test
-    cy.fixture('testData').then((data) => {
-      searchTerms = data.searchTerms;
+        // Visit homepage before each test
+        cy.visit('/');
+        cy.log('🏠 Visited homepage');
+
+        // Handle cookie banner or other popups if necessary
+        cy.handleCookiesAndPopups();
+        cy.log('🍪 Handled cookies and popups if present');
     });
 
-    // Visit homepage before each test
-    cy.visit('/');
-    // Check for and interact with the cookie banner if present
-    cy.handleCookiesAndPopups();
-  });
+    it('should allow users to proceed to checkout', () => {
+        searchTerms.forEach((term) => {
+            cy.log(`🔍 Searching for term: ${term}`);
 
+            // Search for the product using the search term
+            cy.get(Selectors.popupModal, { timeout: 10000 })
+                .type(`${term}{enter}`)
+                .then(() => {
+                    try {
+                        cy.log('✅ Search term entered successfully');
+                    } catch (error) {
+                        cy.log('❌ Error occurred while entering the search term');
+                        throw error; // Re-throw the error to fail the test
+                    }
+                });
 
-    it(`should allow users to proceed to checkout`, () => {
+            // Wait for search results and verify
+            cy.get(Selectors.searchResultsList, { timeout: 20000 })
+                .should('have.length.greaterThan', 0)
+                .then(() => {
+                    try {
+                        cy.log('✅ Search results loaded successfully');
+                    } catch (error) {
+                        cy.log('❌ Failed to load search results');
+                        throw error;
+                    }
+                });
 
-     // Search for the product using the search term from the fixture
-      searchTerms.forEach((searchTerm) => {
-        cy.get(Selectors.popupModal, { timeout: 10000 })
-            .type(`${searchTerm}{enter}`);
+            // Select the first product
+            cy.get(Selectors.searchResultsList)
+                .first()
+                .click()
+                .then(() => {
+                    try {
+                        cy.log('✅ Product clicked successfully');
+                    } catch (error) {
+                        cy.log('❌ Failed to click the product');
+                        throw error;
+                    }
+                });
 
-      // Wait for search results to load and verify that results are present
-      cy.get(Selectors.searchResultsList, { timeout: 20000 }) // Timeout for search results
-          .should('have.length.greaterThan', 0); // Assert that results are shown
+            // Add product to cart
+            cy.get(Selectors.productAddToCartButton, { timeout: 12000 })
+                .scrollIntoView()
+                .should('be.visible')
+                .click()
+                .then(() => {
+                    try {
+                        cy.log('✅ Product added to the cart');
+                    } catch (error) {
+                        cy.log('❌ Error while adding product to the cart');
+                        throw error;
+                    }
+                });
 
-      // Select and click the first product from the search results
-      cy.get(Selectors.searchResultsList)
-          .first() // Get the first result
-          .click(); // Click on the product link
+            // Verify that the "Added to Cart Notification" modal appears
+            cy.get(Selectors.addedToCartModal, { timeout: 10000 })
+                .should('be.visible')
+                .then(() => {
+                    try {
+                        cy.log('✅ Added to Cart modal is visible');
+                    } catch (error) {
+                        cy.log('❌ Added to Cart modal did not appear');
+                        throw error;
+                    }
+                });
 
-      // Add the selected product to the cart
-      cy.get(Selectors.productAddToCartButton, { timeout: 12000 }) // Timeout for the 'Add to Cart' button
-          .scrollIntoView() // Smooth scroll into view for visibility
-          .should('be.visible') // Ensure the button is visible
-          .click(); // Click the 'Add to Cart' button
+            // Close the "Added to Cart Notification" modal
+            cy.get(Selectors.closeAddedToCartModal, { timeout: 10000 })
+                .should('be.visible')
+                .click()
+                .then(() => {
+                    try {
+                        cy.log('✅ Closed Added to Cart modal');
+                    } catch (error) {
+                        cy.log('❌ Failed to close Added to Cart modal');
+                        throw error;
+                    }
+                });
 
-      // Verify that the "Added to Cart Notification" modal appears
-      cy.get(Selectors.addedToCartModal, { timeout: 10000 }) // Timeout for the modal visibility
-          .should('be.visible'); // Ensure the modal is visible
+            // Navigate to the cart
+            cy.get(Selectors.cartIconBubble, { timeout: 10000 })
+                .click()
+                .then(() => {
+                    try {
+                        cy.log('✅ Navigated to the cart');
+                    } catch (error) {
+                        cy.log('❌ Failed to navigate to the cart');
+                        throw error;
+                    }
+                });
 
-      // Close the "Added to Cart Notification" modal
-      cy.get(Selectors.closeAddedToCartModal, { timeout: 10000 }) // Timeout for closing modal
-          .should('be.visible') // Ensure the close button is visible
-          .click(); // Close the modal
+            // Verify that the cart summary is visible
+            cy.get(Selectors.cartSummary, { timeout: 10000 })
+                .should('be.visible')
+                .then(() => {
+                    try {
+                        cy.log('✅ Cart summary is visible');
+                    } catch (error) {
+                        cy.log('❌ Cart summary is not visible');
+                        throw error;
+                    }
+                });
 
-      // Navigate to the cart
-      cy.get(Selectors.cartIconBubble, { timeout: 10000 }) // Timeout for the cart icon visibility
-          .click(); // Click on the cart icon
+            // Scroll down to the cart footer
+            cy.get(Selectors.cartFooter, { timeout: 10000 })
+                .scrollIntoView()
+                .then(() => {
+                    try {
+                        cy.log('✅ Scrolled to cart footer');
+                    } catch (error) {
+                        cy.log('❌ Failed to scroll to cart footer');
+                        throw error;
+                    }
+                });
 
-      // Verify that the cart summary is visible
-      cy.get(Selectors.cartSummary, { timeout: 10000 }) // Timeout for cart summary visibility
-          .should('be.visible'); // Ensure cart summary is visible
+            // Proceed to checkout
+            cy.get(Selectors.checkoutButton, { timeout: 10000 })
+                .should('be.visible')
+                .click()
+                .then(() => {
+                    try {
+                        cy.log('✅ Proceeded to checkout');
+                    } catch (error) {
+                        cy.log('❌ Failed to proceed to checkout');
+                        throw error;
+                    }
+                });
 
-      // Scroll down to the cart footer for a smoother user experience
-      cy.get(Selectors.cartFooter, { timeout: 10000 }) // Timeout for cart footer visibility
-          .scrollIntoView();
+            // Assert that the checkout page is loaded
+            cy.url()
+                .should('include', '/checkout')
+                .then(() => {
+                    try {
+                        cy.log('✅ Checkout page loaded successfully');
+                    } catch (error) {
+                        cy.log('❌ Checkout page did not load');
+                        throw error;
+                    }
+                });
 
-      // Proceed to checkout
-      cy.get(Selectors.checkoutButton, { timeout: 10000 }) // Timeout for checkout button visibility
-          .should('be.visible') // Ensure the checkout button is visible
-          .click(); // Click the checkout button
+            // Verify that the checkout page elements are visible
+            cy.get(Selectors.checkoutMain, { timeout: 10000 })
+                .should('be.visible')
+                .then(() => {
+                    try {
+                        cy.log('✅ Checkout main section is visible');
+                    } catch (error) {
+                        cy.log('❌ Checkout main section is not visible');
+                        throw error;
+                    }
+                });
 
-      // Assert that the checkout page is loaded
-      cy.url().should('include', '/checkout'); // Check if the checkout page URL is loaded
+            cy.get(Selectors.payButton, { timeout: 10000 })
+                .scrollIntoView()
+                .should('be.visible')
+                .then(() => {
+                    try {
+                        cy.log('✅ Payment button is visible');
+                    } catch (error) {
+                        cy.log('❌ Payment button is not visible');
+                        throw error;
+                    }
+                });
+        });
 
-        // Assert that the checkout page is loaded
-        cy.url().should('include', '/checkouts'); // Check if the checkout page URL is loaded
-
-        // Verify that the checkout page elements are visible
-        cy.get(Selectors.checkoutMain, { timeout: 10000 }).should('be.visible');
-        cy.get(Selectors.payButton, { timeout: 10000 }) // Timeout for payment button visibility
-            .scrollIntoView()
-            .should('be.visible'); // Ensure the payment button is visible
+        cy.log('✅ Test completed successfully');
     });
-    });
-
- });
-
-
+});
