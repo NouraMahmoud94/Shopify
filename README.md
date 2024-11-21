@@ -47,8 +47,8 @@ https://github.com/NouraMahmoud94/Shopify.git
  2- Import project to intelliJ IDEA.
  
  3- Open Terminal from intelliJ IDEA.
- 
- 4- Run : npm run test
+
+ 4- Run from the Cypress UI : npx cypress open  OR  Run : npm run test
 
 **Note on Ongoing Enhancements**
 
