@@ -15,12 +15,15 @@ This project automates the testing of a Shopify store, **Tranquilo Matcha**, by 
 - **`package.json`**: Contains the project dependencies and custom scripts.
 - **`/screenshots`**: Contains all the screenshots of failed tests.
 - **`/.github`**: This folder contains the configuration for email notifications upon test failures.
-  
-## **Test Suite Details**: 
-- Home
-- Search
-- Cart
-- checkout
+
+## **Framework Explanation**
+
+Cypress is chosen for its ease of use, real-time debugging, and seamless integration with CI pipelines. It is ideal for E2E testing of web applications.
+
+## **Business Documentation**
+
+Ensure Home, search, cart functionality, and checkout processes are functional, reflecting user workflows.
+
 
 ## **Pre-requisites**
 
