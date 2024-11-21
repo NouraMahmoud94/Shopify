@@ -1,0 +1,186 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 5,
+    "passes": 4,
+    "pending": 0,
+    "failures": 1,
+    "start": "2024-11-20T14:56:19.055Z",
+    "end": "2024-11-20T14:56:38.824Z",
+    "duration": 19769,
+    "testsRegistered": 5,
+    "passPercent": 80,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "b9a44638-a2f9-4350-8a1c-dbd1e9bfe62d",
+      "title": "",
+      "fullFile": "cypress/e2e/cart.cy.js",
+      "file": "cypress/e2e/cart.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "fa378811-5009-44f6-bee6-6ff4ec9b1fa2",
+          "title": "Tranquilo Matcha Cart Functionality",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should allow users to navigate to the cart",
+              "fullTitle": "Tranquilo Matcha Cart Functionality should allow users to navigate to the cart",
+              "timedOut": null,
+              "duration": 1747,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/cart');\ncy.get(_selectors.Selectors.cartItem, {\n  timeout: 10000\n}).should('have.length', 0).then(() => {\n  cy.log('✅ Cart is empty on the first visit');\n});\ncy.pause();",
+              "err": {},
+              "uuid": "f348aecf-92ee-4383-b8bd-e9809799440d",
+              "parentUUID": "fa378811-5009-44f6-bee6-6ff4ec9b1fa2",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should allow users to add a product to the cart",
+              "fullTitle": "Tranquilo Matcha Cart Functionality should allow users to add a product to the cart",
+              "timedOut": null,
+              "duration": 2162,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.get(_selectors.Selectors.searchBar, {\n  timeout: 10000\n}).should('be.visible');\n// Iterate over each search term from fixture data\nsearchTerms.forEach(searchTerm => {\n  cy.get(_selectors.Selectors.popupModal, {\n    timeout: 10000\n  }).type(`${searchTerms}{enter}`);\n  cy.log(`Searched for product: ${searchTerms}`);\n  cy.get(_selectors.Selectors.firstSearchResult, {\n    timeout: 50000\n  }).should('be.visible', {\n    timeout: 50000\n  }).click().then(() => {\n    cy.log(`✅ Clicked first search result for \"${term}\"`);\n  });\n  // Wait for the \"Add to Cart\" button to be visible and then click it\n  cy.get(_selectors.Selectors.productAddToCartButton, {\n    timeout: 10000\n  }).scrollIntoView().should('be.visible').click().then(() => {\n    cy.log('✅ Product added to cart');\n  });\n});\ncy.pause();",
+              "err": {
+                "message": "ReferenceError: term is not defined",
+                "estack": "ReferenceError: term is not defined\n    at Context.eval (webpack://shopify/./cypress/e2e/cart.cy.js:46:65)",
+                "diff": null
+              },
+              "uuid": "7fb9e369-5952-43a8-b43b-a1888b668320",
+              "parentUUID": "fa378811-5009-44f6-bee6-6ff4ec9b1fa2",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should display the Added to Cart notification",
+              "fullTitle": "Tranquilo Matcha Cart Functionality should display the Added to Cart notification",
+              "timedOut": null,
+              "duration": 2667,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get(_selectors.Selectors.searchBar, {\n  timeout: 10000\n}).should('be.visible');\n// Iterate over each search term from fixture data\nsearchTerms.forEach(searchTerm => {\n  cy.get(_selectors.Selectors.popupModal, {\n    timeout: 10000\n  }).type(`${searchTerms}{enter}`);\n  cy.log(`Searched for product: ${searchTerms}`);\n  cy.get(_selectors.Selectors.searchResultsList, {\n    timeout: 10000\n  }).first().click().then(() => {\n    cy.log('✅ Selected the first product from search results');\n  });\n  cy.get(_selectors.Selectors.productAddToCartButton, {\n    timeout: 10000\n  }).should('be.visible').click().then(() => {\n    cy.log('✅ Product added to cart');\n  });\n  // Verify the \"Added to Cart Notification\" detail Popup\n  cy.get(_selectors.Selectors.addedToCartModal, {\n    timeout: 15000\n  }).should('be.visible').then(() => {\n    cy.log('✅ \"Added to Cart\" notification displayed');\n  });\n});\ncy.pause(); // Pause to verify the added to cart modal visibility",
+              "err": {},
+              "uuid": "6695fc4f-0aef-4e4a-b49a-cc6aa429f7b9",
+              "parentUUID": "fa378811-5009-44f6-bee6-6ff4ec9b1fa2",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should display the cart icon with added products",
+              "fullTitle": "Tranquilo Matcha Cart Functionality should display the cart icon with added products",
+              "timedOut": null,
+              "duration": 2561,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get(_selectors.Selectors.searchBar, {\n  timeout: 10000\n}).should('be.visible');\n// Iterate over each search term from fixture data\nsearchTerms.forEach(searchTerm => {\n  cy.get(_selectors.Selectors.popupModal, {\n    timeout: 10000\n  }).type(`${searchTerms}{enter}`);\n  cy.log(`Searched for product: ${searchTerms}`);\n  cy.get(_selectors.Selectors.searchResultsList, {\n    timeout: 10000\n  }).first().click().then(() => {\n    cy.log('✅ Selected the first product from search results');\n  });\n  cy.get(_selectors.Selectors.productAddToCartButton, {\n    timeout: 10000\n  }).scrollIntoView().should('be.visible').click().then(() => {\n    cy.log('✅ Product added to cart');\n  });\n  // Wait for the cart count to update and assert it has increased\n  cy.get(_selectors.Selectors.cartIconBubble, {\n    timeout: 10000\n  }).should('be.visible') // Ensure the cart icon is visible\n  .should('not.have.text', '0').then(() => {\n    cy.log('✅ Cart icon updated with added product count');\n  });\n});\ncy.pause(); // Pause to inspect the cart icon update",
+              "err": {},
+              "uuid": "40cf7cbf-0f19-4116-a7be-1c68549f44bd",
+              "parentUUID": "fa378811-5009-44f6-bee6-6ff4ec9b1fa2",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should display the cart with added products",
+              "fullTitle": "Tranquilo Matcha Cart Functionality should display the cart with added products",
+              "timedOut": null,
+              "duration": 4735,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get(_selectors.Selectors.searchBar, {\n  timeout: 10000\n}).should('be.visible');\n// Iterate over each search term from fixture data\nsearchTerms.forEach(searchTerm => {\n  cy.get(_selectors.Selectors.popupModal, {\n    timeout: 10000\n  }).type(`${searchTerms}{enter}`);\n  cy.log(`Searched for product: ${searchTerms}`);\n  cy.get(_selectors.Selectors.searchResultsList, {\n    timeout: 10000\n  }).first().click().then(() => {\n    cy.log('✅ Selected the last product from search results');\n  });\n  cy.get(_selectors.Selectors.productAddToCartButton, {\n    timeout: 10000\n  }).scrollIntoView().should('be.visible').click();\n});\n// Wait for the \"Add to Cart\" button to be visible and then click it again for a second product\ncy.get(_selectors.Selectors.productAddToCartButton, {\n  timeout: 10000\n}).scrollIntoView().should('be.visible').click().then(() => {\n  cy.log('✅ Product added to cart');\n});\n// Wait for the cart count to update and assert it has increased\ncy.get(_selectors.Selectors.cartIconBubble, {\n  timeout: 10000\n}).should('be.visible') // Ensure the cart icon is visible\n.should('not.have.text', '0').click().then(() => {\n  cy.log('✅ Navigated to cart to view added products');\n});\ncy.pause();",
+              "err": {},
+              "uuid": "1a2e73a6-5f5f-41a5-9a42-6111c0b6d6b2",
+              "parentUUID": "fa378811-5009-44f6-bee6-6ff4ec9b1fa2",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "f348aecf-92ee-4383-b8bd-e9809799440d",
+            "6695fc4f-0aef-4e4a-b49a-cc6aa429f7b9",
+            "40cf7cbf-0f19-4116-a7be-1c68549f44bd",
+            "1a2e73a6-5f5f-41a5-9a42-6111c0b6d6b2"
+          ],
+          "failures": [
+            "7fb9e369-5952-43a8-b43b-a1888b668320"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 13872,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

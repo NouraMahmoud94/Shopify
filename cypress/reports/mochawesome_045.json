@@ -1,0 +1,129 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 1,
+    "pending": 0,
+    "failures": 1,
+    "start": "2024-11-20T12:49:47.800Z",
+    "end": "2024-11-20T12:49:51.024Z",
+    "duration": 3224,
+    "testsRegistered": 2,
+    "passPercent": 50,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "7ecdcc7f-aca0-44d6-9b9a-c096968d0f5c",
+      "title": "",
+      "fullFile": "cypress/e2e/search.cy.js",
+      "file": "cypress/e2e/search.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "c25bc41d-8cb6-41e1-bf9f-ccee75eb83ae",
+          "title": "Tranquilo Matcha Search Functionality",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should display the search bar",
+              "fullTitle": "Tranquilo Matcha Search Functionality should display the search bar",
+              "timedOut": null,
+              "duration": 862,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get(_selectors.Selectors.searchBar, {\n  timeout: 20000\n}).should('be.visible').then(() => {\n  cy.log('✅ Search bar is visible');\n});\ncy.pause(); // Pause here to inspect if the test is failing",
+              "err": {},
+              "uuid": "426fca7a-200c-4d7d-adc8-dca259b7eac6",
+              "parentUUID": "c25bc41d-8cb6-41e1-bf9f-ccee75eb83ae",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should allow users to search for a product",
+              "fullTitle": "Tranquilo Matcha Search Functionality should allow users to search for a product",
+              "timedOut": null,
+              "duration": 691,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "searchTerms.forEach(term => {\n  cy.get(_selectors.Selectors.searchBar, {\n    timeout: 20000\n  }).should('be.visible').then(() => {\n    cy.log(`✅ Search bar is visible for search term \"${term}\"`);\n  }).type(`${term}{enter}`, {\n    delay: 200\n  });\n  cy.log(`🔎 Searching for \"${term}\"`);\n  cy.pause(); // Pause here to debug any potential issues with typing or search\n});",
+              "err": {
+                "message": "CypressError: `cy.type()` failed because it requires a DOM element.\n\nThe subject received was:\n\n  > `null`\n\nThe previous command that ran was:\n\n  > `cy.log()`",
+                "estack": "CypressError: `cy.type()` failed because it requires a DOM element.\n\nThe subject received was:\n\n  > `null`\n\nThe previous command that ran was:\n\n  > `cy.log()`\n    at isElement (https://tranquilomatcha.com/__cypress/runner/cypress_runner.js:144875:58)\n    at validateType (https://tranquilomatcha.com/__cypress/runner/cypress_runner.js:144724:14)\n    at Object.isType (https://tranquilomatcha.com/__cypress/runner/cypress_runner.js:144755:7)\n    at $Cy.pushSubject (https://tranquilomatcha.com/__cypress/runner/cypress_runner.js:138404:22)\n    at wrapped (https://tranquilomatcha.com/__cypress/runner/cypress_runner.js:137961:19)\nFrom Your Spec Code:\n    at eval (webpack://shopify/./cypress/e2e/search.cy.js:42:11)\n    at Context.eval (webpack://shopify/./cypress/e2e/search.cy.js:36:16)",
+                "diff": null
+              },
+              "uuid": "db6119e6-7177-47da-9b1c-9110287940cb",
+              "parentUUID": "c25bc41d-8cb6-41e1-bf9f-ccee75eb83ae",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "426fca7a-200c-4d7d-adc8-dca259b7eac6"
+          ],
+          "failures": [
+            "db6119e6-7177-47da-9b1c-9110287940cb"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 1553,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

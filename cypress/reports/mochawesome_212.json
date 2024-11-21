@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2024-11-21T13:47:19.316Z",
+    "end": "2024-11-21T13:47:26.081Z",
+    "duration": 6765,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "c8d3c007-0924-4150-96b1-174640f54f97",
+      "title": "",
+      "fullFile": "cypress/e2e/checkout.cy.js",
+      "file": "cypress/e2e/checkout.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "64b8eccb-29cb-43b9-ba8c-2ca33fc86e77",
+          "title": "Tranquilo Matcha Checkout Functionality",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should allow users to proceed to checkout",
+              "fullTitle": "Tranquilo Matcha Checkout Functionality should allow users to proceed to checkout",
+              "timedOut": null,
+              "duration": 6719,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Search for the product using the search term from the fixture\nsearchTerms.forEach(searchTerms => {\n  cy.get(_selectors.Selectors.popupModal, {\n    timeout: 10000\n  }).type(`${searchTerms}{enter}`);\n  // Wait for search results to load and verify that results are present\n  cy.get(_selectors.Selectors.searchResultsList, {\n    timeout: 20000\n  }) // Timeout for search results\n  .should('have.length.greaterThan', 0); // Assert that results are shown\n  // Select and click the first product from the search results\n  cy.get(_selectors.Selectors.searchResultsList).first() // Get the first result\n  .click(); // Click on the product link\n  // Add the selected product to the cart\n  cy.get(_selectors.Selectors.productAddToCartButton, {\n    timeout: 12000\n  }) // Timeout for the 'Add to Cart' button\n  .scrollIntoView() // Smooth scroll into view for visibility\n  .should('be.visible') // Ensure the button is visible\n  .click(); // Click the 'Add to Cart' button\n  // Verify that the \"Added to Cart Notification\" modal appears\n  cy.get(_selectors.Selectors.addedToCartModal, {\n    timeout: 10000\n  }) // Timeout for the modal visibility\n  .should('be.visible'); // Ensure the modal is visible\n  // Close the \"Added to Cart Notification\" modal\n  cy.get(_selectors.Selectors.closeAddedToCartModal, {\n    timeout: 10000\n  }) // Timeout for closing modal\n  .should('be.visible') // Ensure the close button is visible\n  .click(); // Close the modal\n  // Navigate to the cart\n  cy.get(_selectors.Selectors.cartIconBubble, {\n    timeout: 10000\n  }) // Timeout for the cart icon visibility\n  .click(); // Click on the cart icon\n  // Verify that the cart summary is visible\n  cy.get(_selectors.Selectors.cartSummary, {\n    timeout: 10000\n  }) // Timeout for cart summary visibility\n  .should('be.visible'); // Ensure cart summary is visible\n  // Scroll down to the cart footer for a smoother user experience\n  cy.get(_selectors.Selectors.cartFooter, {\n    timeout: 10000\n  }) // Timeout for cart footer visibility\n  .scrollIntoView();\n  // Proceed to checkout\n  cy.get(_selectors.Selectors.checkoutButton, {\n    timeout: 10000\n  }) // Timeout for checkout button visibility\n  .should('be.visible') // Ensure the checkout button is visible\n  .click(); // Click the checkout button\n  // Assert that the checkout page is loaded\n  cy.url().should('include', '/checkout'); // Check if the checkout page URL is loaded\n  // Verify that the checkout page elements are visible\n  cy.get(_selectors.Selectors.checkoutMain, {\n    timeout: 10000\n  }).should('be.visible');\n  cy.get(_selectors.Selectors.payButton, {\n    timeout: 10000\n  }) // Timeout for payment button visibility\n  .scrollIntoView().should('be.visible'); // Ensure the payment button is visible\n});",
+              "err": {},
+              "uuid": "db147c92-3d7e-4f94-b729-8d218ecaa141",
+              "parentUUID": "64b8eccb-29cb-43b9-ba8c-2ca33fc86e77",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "db147c92-3d7e-4f94-b729-8d218ecaa141"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 6719,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

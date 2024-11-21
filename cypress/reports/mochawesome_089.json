@@ -1,0 +1,129 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 1,
+    "pending": 0,
+    "failures": 1,
+    "start": "2024-11-20T13:09:34.955Z",
+    "end": "2024-11-20T13:09:38.014Z",
+    "duration": 3059,
+    "testsRegistered": 2,
+    "passPercent": 50,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "679ecf86-8c99-4c5f-8f61-3c1c269d6b3e",
+      "title": "",
+      "fullFile": "cypress/e2e/search.cy.js",
+      "file": "cypress/e2e/search.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "f22224a2-947c-4312-b293-3a40cecc4dc3",
+          "title": "Tranquilo Matcha Search Functionality",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should display the search bar",
+              "fullTitle": "Tranquilo Matcha Search Functionality should display the search bar",
+              "timedOut": null,
+              "duration": 874,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get(_selectors.Selectors.searchBar, {\n  timeout: 20000\n}).should('be.visible').then(() => {\n  cy.log('✅ Search bar is visible');\n});\ncy.pause(); // Pause here to inspect if the test is failing",
+              "err": {},
+              "uuid": "aa3a6dcb-0df4-4084-8ff2-2c157d406d2f",
+              "parentUUID": "f22224a2-947c-4312-b293-3a40cecc4dc3",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should allow users to search for a product",
+              "fullTitle": "Tranquilo Matcha Search Functionality should allow users to search for a product",
+              "timedOut": null,
+              "duration": 634,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "searchTerms.forEach(term => {\n  cy.get(_selectors.Selectors.searchBar, {\n    timeout: 20000\n  }).should('be.visible').then(() => {\n    cy.log(`✅ Search bar is visible for search term \"${term}\"`);\n  });\n  cy.get(_selectors.Selectors.popupModal, {\n    timeout: 50000\n  }).type(`${searchTerm}{enter}`);\n  cy.log(`🔎 Searching for \"${term}\"`);\n  cy.pause();\n});",
+              "err": {
+                "message": "ReferenceError: searchTerm is not defined",
+                "estack": "ReferenceError: searchTerm is not defined\n    at eval (webpack://shopify/./cypress/e2e/search.cy.js:42:19)\n    at Context.eval (webpack://shopify/./cypress/e2e/search.cy.js:35:16)",
+                "diff": null
+              },
+              "uuid": "548c78ce-100a-4831-99e6-da79b21f2e64",
+              "parentUUID": "f22224a2-947c-4312-b293-3a40cecc4dc3",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "aa3a6dcb-0df4-4084-8ff2-2c157d406d2f"
+          ],
+          "failures": [
+            "548c78ce-100a-4831-99e6-da79b21f2e64"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 1508,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

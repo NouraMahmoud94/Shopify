@@ -1,0 +1,181 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2024-11-21T13:46:57.882Z",
+    "end": "2024-11-21T13:47:04.393Z",
+    "duration": 6511,
+    "testsRegistered": 5,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "7c614d40-6271-46ac-b278-1aac5fa875bf",
+      "title": "",
+      "fullFile": "cypress/e2e/Home.cy.js",
+      "file": "cypress/e2e/Home.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "733b470f-da21-4587-84a5-5eddd1769323",
+          "title": "Homepage and Navigation Tests",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should load the homepage successfully",
+              "fullTitle": "Homepage and Navigation Tests should load the homepage successfully",
+              "timedOut": null,
+              "duration": 1608,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Ensure the homepage logo is visible, indicating the page has loaded\ncy.get(_selectors.Selectors.logo, {\n  timeout: 10000\n}) // Added timeout\n.should('be.visible').then(() => {\n  cy.log('✅ Home page is visible successfully');\n});\ncy.pause();",
+              "err": {},
+              "uuid": "faa7e5de-cc07-4611-af76-cea7e2c9cf53",
+              "parentUUID": "733b470f-da21-4587-84a5-5eddd1769323",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should display the search input",
+              "fullTitle": "Homepage and Navigation Tests should display the search input",
+              "timedOut": null,
+              "duration": 655,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Check that the search bar is visible\ncy.get(_selectors.Selectors.searchBar, {\n  timeout: 10000\n}) // Added timeout\n.should('be.visible').then(() => {\n  cy.log('✅ Search input is visible');\n});\ncy.pause(); // Pause to inspect the search bar visibility",
+              "err": {},
+              "uuid": "c2641617-b6f5-4d7b-8cfb-6d3d37e4eccb",
+              "parentUUID": "733b470f-da21-4587-84a5-5eddd1769323",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should navigate to the Shop page when tab is clicked",
+              "fullTitle": "Homepage and Navigation Tests should navigate to the Shop page when tab is clicked",
+              "timedOut": null,
+              "duration": 1153,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Click on the Shop navigation tab\ncy.get(_selectors.Selectors.navTabs, {\n  timeout: 10000\n}).click();\ncy.url({\n  timeout: 10000\n}).should('include', 'shop').then(() => {\n  cy.log('✅ Successfully navigated to the Shop page');\n});\ncy.pause();",
+              "err": {},
+              "uuid": "54f4c943-97c0-4134-a383-21b67896986e",
+              "parentUUID": "733b470f-da21-4587-84a5-5eddd1769323",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should load more content when scrolling down",
+              "fullTitle": "Homepage and Navigation Tests should load more content when scrolling down",
+              "timedOut": null,
+              "duration": 730,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Scroll to the bottom of the page to trigger more content loading\ncy.scrollTo('bottom', {\n  timeout: 10000\n}).then(() => {\n  cy.log('✅ Scrolled to the bottom to load more content');\n});\ncy.pause();",
+              "err": {},
+              "uuid": "831b6557-86f3-4153-bdfd-b00b7ded1a65",
+              "parentUUID": "733b470f-da21-4587-84a5-5eddd1769323",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should be able to navigate to different pages",
+              "fullTitle": "Homepage and Navigation Tests should be able to navigate to different pages",
+              "timedOut": null,
+              "duration": 2256,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Click on a navigation tab and verify the URL\ncy.get(_selectors.Selectors.navTabs, {\n  timeout: 10000\n}).click();\ncy.url({\n  timeout: 10000\n}).should('include', '/collections/shop').then(() => {\n  cy.log('✅ Successfully navigated to the collections/shop page');\n});\n// Navigate back to the previous page (homepage)\ncy.go('back', {\n  timeout: 10000\n}).then(() => {\n  cy.log('✅ Navigated back to the homepage');\n});\ncy.pause();",
+              "err": {},
+              "uuid": "6c1b1eab-219f-4aa6-a236-89ab2d72d148",
+              "parentUUID": "733b470f-da21-4587-84a5-5eddd1769323",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "faa7e5de-cc07-4611-af76-cea7e2c9cf53",
+            "c2641617-b6f5-4d7b-8cfb-6d3d37e4eccb",
+            "54f4c943-97c0-4134-a383-21b67896986e",
+            "831b6557-86f3-4153-bdfd-b00b7ded1a65",
+            "6c1b1eab-219f-4aa6-a236-89ab2d72d148"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 6402,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

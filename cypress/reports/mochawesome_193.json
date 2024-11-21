@@ -1,0 +1,175 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 1,
+    "pending": 0,
+    "failures": 3,
+    "start": "2024-11-20T15:07:04.515Z",
+    "end": "2024-11-20T15:07:16.387Z",
+    "duration": 11872,
+    "testsRegistered": 4,
+    "passPercent": 25,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "7edb48e3-35c6-424a-9dc4-33a2193477df",
+      "title": "",
+      "fullFile": "cypress/e2e/search.cy.js",
+      "file": "cypress/e2e/search.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "d45142d1-0566-4fbd-86f0-c76984c4ae42",
+          "title": "Tranquilo Matcha Search Functionality",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should display the search bar",
+              "fullTitle": "Tranquilo Matcha Search Functionality should display the search bar",
+              "timedOut": null,
+              "duration": 1367,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get(_selectors.Selectors.searchBar, {\n  timeout: 10000\n}).should('be.visible').then(() => {\n  cy.log('✅ Search bar is visible');\n});\ncy.pause(); // Pause here to inspect if the test is failing",
+              "err": {},
+              "uuid": "495fa9de-3969-4cb9-a0e9-77e7e3e493a2",
+              "parentUUID": "d45142d1-0566-4fbd-86f0-c76984c4ae42",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should allow users to search for a product",
+              "fullTitle": "Tranquilo Matcha Search Functionality should allow users to search for a product",
+              "timedOut": null,
+              "duration": 1011,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "searchTerms.forEach(term => {\n  cy.get(_selectors.Selectors.searchBar, {\n    timeout: 10000\n  }).should('be.visible').then(() => {\n    cy.log(`✅ Search bar is visible for search term \"${term}\"`);\n  });\n  cy.get(_selectors.Selectors.popupModal, {\n    timeout: 50000\n  }).type(`${searchTerms}{enter}`, {\n    delay: 200\n  });\n  cy.log(`🔎 Searching for \"${term}\"`);\n  cy.pause();\n});",
+              "err": {
+                "message": "ReferenceError: searchTerms is not defined",
+                "estack": "ReferenceError: searchTerms is not defined\n    at Context.eval (webpack://shopify/./cypress/e2e/search.cy.js:33:8)",
+                "diff": null
+              },
+              "uuid": "8fce67c1-cdbe-4504-af3d-b9134ebf1f45",
+              "parentUUID": "d45142d1-0566-4fbd-86f0-c76984c4ae42",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should display the list of search results",
+              "fullTitle": "Tranquilo Matcha Search Functionality should display the list of search results",
+              "timedOut": null,
+              "duration": 1140,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "searchTerms.forEach(term => {\n  cy.get(_selectors.Selectors.searchBar, {\n    timeout: 10000\n  }).should('be.visible');\n  cy.get(_selectors.Selectors.popupModal, {\n    timeout: 50000\n  }).type(`${searchTerms}{enter}`);\n  cy.get(_selectors.Selectors.searchResultsList, {\n    timeout: 20000\n  }).should('have.length.greaterThan', 0).then(results => {\n    cy.log(`✅ Search results for \"${term}\" displayed, count: ${results.length}`);\n  });\n  cy.pause(); // Pause here to inspect the results\n});",
+              "err": {
+                "message": "ReferenceError: searchTerms is not defined",
+                "estack": "ReferenceError: searchTerms is not defined\n    at Context.eval (webpack://shopify/./cypress/e2e/search.cy.js:48:8)",
+                "diff": null
+              },
+              "uuid": "009a531d-93d7-4038-87b2-250b61fc639e",
+              "parentUUID": "d45142d1-0566-4fbd-86f0-c76984c4ae42",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should navigate to the product page",
+              "fullTitle": "Tranquilo Matcha Search Functionality should navigate to the product page",
+              "timedOut": null,
+              "duration": 1189,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "searchTerms.forEach(term => {\n  cy.get(_selectors.Selectors.searchBar, {\n    timeout: 10000\n  }).should('be.visible');\n  cy.get(_selectors.Selectors.popupModal, {\n    timeout: 50000\n  }).type(`${searchTerms}{enter}`);\n  cy.get(_selectors.Selectors.firstSearchResult, {\n    timeout: 50000\n  }).should('be.visible', {\n    timeout: 50000\n  }).click().then(() => {\n    cy.log(`✅ Clicked first search result for \"${term}\"`);\n  });\n  cy.url().should('include', '/products/').then(() => {\n    cy.log(`✅ Successfully navigated to product page for \"${term}\"`);\n  });\n  cy.pause();\n});",
+              "err": {
+                "message": "ReferenceError: searchTerms is not defined",
+                "estack": "ReferenceError: searchTerms is not defined\n    at Context.eval (webpack://shopify/./cypress/e2e/search.cy.js:65:8)",
+                "diff": null
+              },
+              "uuid": "a1adf8e7-f89c-4a87-b4c0-845f235b554b",
+              "parentUUID": "d45142d1-0566-4fbd-86f0-c76984c4ae42",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "495fa9de-3969-4cb9-a0e9-77e7e3e493a2"
+          ],
+          "failures": [
+            "8fce67c1-cdbe-4504-af3d-b9134ebf1f45",
+            "009a531d-93d7-4038-87b2-250b61fc639e",
+            "a1adf8e7-f89c-4a87-b4c0-845f235b554b"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 4707,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

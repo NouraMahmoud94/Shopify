@@ -1,0 +1,162 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2024-11-21T16:17:10.903Z",
+    "end": "2024-11-21T16:17:18.241Z",
+    "duration": 7338,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "aa1581c2-e03d-4fc6-8215-aa661eaa93a2",
+      "title": "",
+      "fullFile": "cypress/e2e/search.cy.js",
+      "file": "cypress/e2e/search.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "69c131dc-86dc-4cbf-b33e-0ee472dd17f0",
+          "title": "Tranquilo Matcha Search Functionality",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should display the search bar",
+              "fullTitle": "Tranquilo Matcha Search Functionality should display the search bar",
+              "timedOut": null,
+              "duration": 1260,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get(_selectors.Selectors.searchBar, {\n  timeout: 10000\n}).should('be.visible').then(() => {\n  try {\n    cy.log('✅ Search bar is visible');\n  } catch (error) {\n    cy.log('❌ Failed to verify search bar visibility');\n    throw error;\n  }\n});\ncy.pause(); // Pause here to inspect if the test is failing",
+              "err": {},
+              "uuid": "be951ae1-3e38-4f4d-b1e4-5df5e701a365",
+              "parentUUID": "69c131dc-86dc-4cbf-b33e-0ee472dd17f0",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should allow users to search for a product",
+              "fullTitle": "Tranquilo Matcha Search Functionality should allow users to search for a product",
+              "timedOut": null,
+              "duration": 2203,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "searchTerms.forEach(term => {\n  cy.get(_selectors.Selectors.searchBar, {\n    timeout: 10000\n  }).should('be.visible').then(() => {\n    try {\n      cy.log(`✅ Search bar is visible for search term \"${term}\"`);\n    } catch (error) {\n      cy.log(`❌ Failed to check search bar for term \"${term}\"`);\n      throw error;\n    }\n  });\n  cy.get(_selectors.Selectors.popupModal, {\n    timeout: 50000\n  }).type(`${term}{enter}`, {\n    delay: 200\n  }).then(() => {\n    try {\n      cy.log(`🔎 Searching for \"${term}\"`);\n    } catch (error) {\n      cy.log(`❌ Failed to log search for \"${term}\"`);\n      throw error;\n    }\n  });\n  cy.pause(); // Pause here to inspect the modal\n});",
+              "err": {},
+              "uuid": "b780c05a-0690-4509-ac4c-f6d8197a2da3",
+              "parentUUID": "69c131dc-86dc-4cbf-b33e-0ee472dd17f0",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should display the list of search results",
+              "fullTitle": "Tranquilo Matcha Search Functionality should display the list of search results",
+              "timedOut": null,
+              "duration": 1371,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "searchTerms.forEach(term => {\n  cy.get(_selectors.Selectors.searchBar, {\n    timeout: 10000\n  }).should('be.visible');\n  cy.get(_selectors.Selectors.popupModal, {\n    timeout: 50000\n  }).type(`${term}{enter}`);\n  cy.get(_selectors.Selectors.searchResultsList, {\n    timeout: 20000\n  }).should('have.length.greaterThan', 0).then(results => {\n    try {\n      cy.log(`✅ Search results for \"${term}\" displayed, count: ${results.length}`);\n    } catch (error) {\n      cy.log(`❌ Failed to display search results for \"${term}\"`);\n      throw error;\n    }\n  });\n  cy.pause(); // Pause here to inspect the results\n});",
+              "err": {},
+              "uuid": "874dbc85-41d7-4bb2-b62d-ff9fd77c579b",
+              "parentUUID": "69c131dc-86dc-4cbf-b33e-0ee472dd17f0",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should navigate to the product page",
+              "fullTitle": "Tranquilo Matcha Search Functionality should navigate to the product page",
+              "timedOut": null,
+              "duration": 1959,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "searchTerms.forEach(term => {\n  cy.get(_selectors.Selectors.searchBar, {\n    timeout: 10000\n  }).should('be.visible');\n  cy.get(_selectors.Selectors.popupModal, {\n    timeout: 50000\n  }).type(`${term}{enter}`);\n  cy.get(_selectors.Selectors.firstSearchResult, {\n    timeout: 50000\n  }).should('be.visible', {\n    timeout: 50000\n  }).click().then(() => {\n    try {\n      cy.log(`✅ Clicked first search result for \"${term}\"`);\n    } catch (error) {\n      cy.log(`❌ Failed to click first search result for \"${term}\"`);\n      throw error;\n    }\n  });\n  cy.url().should('include', '/products/').then(() => {\n    try {\n      cy.log(`✅ Successfully navigated to product page for \"${term}\"`);\n    } catch (error) {\n      cy.log(`❌ Failed to navigate to product page for \"${term}\"`);\n      throw error;\n    }\n  });\n  cy.pause();\n});",
+              "err": {},
+              "uuid": "5b485f27-954b-48c1-a294-e3bd55f52710",
+              "parentUUID": "69c131dc-86dc-4cbf-b33e-0ee472dd17f0",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "be951ae1-3e38-4f4d-b1e4-5df5e701a365",
+            "b780c05a-0690-4509-ac4c-f6d8197a2da3",
+            "874dbc85-41d7-4bb2-b62d-ff9fd77c579b",
+            "5b485f27-954b-48c1-a294-e3bd55f52710"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 6793,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

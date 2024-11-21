@@ -1,0 +1,186 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2024-11-20T11:57:43.188Z",
+    "end": "2024-11-20T11:58:17.644Z",
+    "duration": 34456,
+    "testsRegistered": 5,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 4,
+    "hasSkipped": true
+  },
+  "results": [
+    {
+      "uuid": "4fa75d1d-2929-4b74-bbfd-f72f59d04fae",
+      "title": "",
+      "fullFile": "cypress/e2e/Home.cy.js",
+      "file": "cypress/e2e/Home.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "e1a8510a-c081-4e0d-886b-9bfb27f2245e",
+          "title": "Homepage and Navigation Tests",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should load the homepage successfully",
+              "fullTitle": "Homepage and Navigation Tests should load the homepage successfully",
+              "timedOut": null,
+              "duration": 11118,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.get(_selectors.Selectors.logo, {\n  timeout: 10000\n}).should('be.visible');",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 10000ms: Expected to find element: `#one-click-popup-13553372974531`, but never found it.\n\nBecause this error occurred during a `before each` hook we are skipping the remaining tests in the current suite: `Homepage and Navigation Tests`",
+                "estack": "AssertionError: Timed out retrying after 10000ms: Expected to find element: `#one-click-popup-13553372974531`, but never found it.\n\nBecause this error occurred during a `before each` hook we are skipping the remaining tests in the current suite: `Homepage and Navigation Tests`\n    at Context.eval (webpack://shopify/./cypress/support/commands.js:7:7)",
+                "diff": null
+              },
+              "uuid": "d120fecb-191d-48ea-b68f-f2ea09f9ae83",
+              "parentUUID": "e1a8510a-c081-4e0d-886b-9bfb27f2245e",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should display the search input",
+              "fullTitle": "Homepage and Navigation Tests should display the search input",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get(_selectors.Selectors.searchBar, {\n  timeout: 10000\n}).should('be.visible');",
+              "err": {},
+              "uuid": "eda9618b-4b22-4167-b11f-307d282e2a09",
+              "parentUUID": "e1a8510a-c081-4e0d-886b-9bfb27f2245e",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "should navigate to the Shop page when tab is clicked",
+              "fullTitle": "Homepage and Navigation Tests should navigate to the Shop page when tab is clicked",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get(_selectors.Selectors.navTabs).click();\ncy.url().should('include', 'shop');",
+              "err": {},
+              "uuid": "a36ae3f9-2307-43b4-90b1-b46da659e691",
+              "parentUUID": "e1a8510a-c081-4e0d-886b-9bfb27f2245e",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "should load more content when scrolling down",
+              "fullTitle": "Homepage and Navigation Tests should load more content when scrolling down",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.scrollTo('bottom');",
+              "err": {},
+              "uuid": "95af7da1-19b3-4cf1-bcf4-ba1777920232",
+              "parentUUID": "e1a8510a-c081-4e0d-886b-9bfb27f2245e",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "should be able to navigate to different pages",
+              "fullTitle": "Homepage and Navigation Tests should be able to navigate to different pages",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get(_selectors.Selectors.navTabs).click();\ncy.url().should('include', 'shop');\n// Navigate back to the previous page (homepage)\ncy.go('back');",
+              "err": {},
+              "uuid": "f0d82934-badf-4f9d-9c21-6662d517bf30",
+              "parentUUID": "e1a8510a-c081-4e0d-886b-9bfb27f2245e",
+              "isHook": false,
+              "skipped": true
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "d120fecb-191d-48ea-b68f-f2ea09f9ae83"
+          ],
+          "pending": [],
+          "skipped": [
+            "eda9618b-4b22-4167-b11f-307d282e2a09",
+            "a36ae3f9-2307-43b4-90b1-b46da659e691",
+            "95af7da1-19b3-4cf1-bcf4-ba1777920232",
+            "f0d82934-badf-4f9d-9c21-6662d517bf30"
+          ],
+          "duration": 11118,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

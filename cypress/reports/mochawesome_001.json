@@ -1,0 +1,186 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2024-11-20T11:58:19.478Z",
+    "end": "2024-11-20T11:58:53.916Z",
+    "duration": 34438,
+    "testsRegistered": 5,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 4,
+    "hasSkipped": true
+  },
+  "results": [
+    {
+      "uuid": "1c893a48-55e6-4a2f-98fe-37bac2e75e94",
+      "title": "",
+      "fullFile": "cypress/e2e/cart.cy.js",
+      "file": "cypress/e2e/cart.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "9dc49def-1e49-492d-af6a-43e92adee8a2",
+          "title": "Tranquilo Matcha Cart Functionality",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should allow users to navigate to the cart",
+              "fullTitle": "Tranquilo Matcha Cart Functionality should allow users to navigate to the cart",
+              "timedOut": null,
+              "duration": 11426,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/cart');\ncy.get(_selectors.Selectors.cartItem, {\n  timeout: 10000\n}) // Explicit timeout for critical element\n.should('have.length', 0);",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 10000ms: Expected to find element: `#one-click-popup-13553372974531`, but never found it.\n\nBecause this error occurred during a `before each` hook we are skipping the remaining tests in the current suite: `Tranquilo Matcha Cart Funct...`",
+                "estack": "AssertionError: Timed out retrying after 10000ms: Expected to find element: `#one-click-popup-13553372974531`, but never found it.\n\nBecause this error occurred during a `before each` hook we are skipping the remaining tests in the current suite: `Tranquilo Matcha Cart Funct...`\n    at Context.eval (webpack://shopify/./cypress/support/commands.js:7:7)",
+                "diff": null
+              },
+              "uuid": "3a67cf55-5c9d-471d-8a9d-563ab69a16c7",
+              "parentUUID": "9dc49def-1e49-492d-af6a-43e92adee8a2",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should allow users to add a product to the cart",
+              "fullTitle": "Tranquilo Matcha Cart Functionality should allow users to add a product to the cart",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Iterate over each search term from fixture data\nsearchTerms.forEach(searchTerm => {\n  // Search for a product using the search modal\n  cy.get(_selectors.Selectors.popupModal, {\n    timeout: 10000\n  }).type(`${searchTerm}{enter}`);\n  // Select the first product from the search results dropdown\n  cy.get(_selectors.Selectors.searchResultsList, {\n    timeout: 10000\n  }).first().click();\n  // Wait for the \"Add to Cart\" button to be visible and then click it\n  cy.get(_selectors.Selectors.productAddToCartButton, {\n    timeout: 1000\n  }).scrollIntoView().should('be.visible').click();\n});",
+              "err": {},
+              "uuid": "ad741cc1-4c62-4231-9fd7-337635b1d1f0",
+              "parentUUID": "9dc49def-1e49-492d-af6a-43e92adee8a2",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "should display the Added to Cart notification",
+              "fullTitle": "Tranquilo Matcha Cart Functionality should display the Added to Cart notification",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Iterate over each search term from fixture data\nsearchTerms.forEach(searchTerm => {\n  cy.get(_selectors.Selectors.popupModal, {\n    timeout: 10000\n  }).type(`${searchTerm}{enter}`);\n  cy.get(_selectors.Selectors.searchResultsList, {\n    timeout: 10000\n  }).first().click();\n  cy.get(_selectors.Selectors.productAddToCartButton, {\n    timeout: 15000\n  }).should('be.visible').click();\n  // Verify the \"Added to Cart Notification\" detail Popup\n  cy.get(_selectors.Selectors.addedToCartModal, {\n    timeout: 15000\n  }).should('be.visible');\n});",
+              "err": {},
+              "uuid": "4938a935-da98-498e-a6df-e7c04451a04a",
+              "parentUUID": "9dc49def-1e49-492d-af6a-43e92adee8a2",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "should display the cart icon with added products",
+              "fullTitle": "Tranquilo Matcha Cart Functionality should display the cart icon with added products",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Iterate over each search term from fixture data\nsearchTerms.forEach(searchTerm => {\n  cy.get(_selectors.Selectors.popupModal, {\n    timeout: 10000\n  }).type(`${searchTerm}{enter}`);\n  cy.get(_selectors.Selectors.searchResultsList, {\n    timeout: 10000\n  }).first().click();\n  cy.get(_selectors.Selectors.productAddToCartButton, {\n    timeout: 10000\n  }).scrollIntoView().should('be.visible').click();\n  // Wait for the cart count to update and assert it has increased\n  cy.get(_selectors.Selectors.cartIconBubble, {\n    timeout: 10000\n  }).should('be.visible') // Ensure the cart icon is visible\n  .should('not.have.text', '0');\n});",
+              "err": {},
+              "uuid": "494e5aa1-f060-44e1-96f0-4216f3a88669",
+              "parentUUID": "9dc49def-1e49-492d-af6a-43e92adee8a2",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "should display the cart with added products",
+              "fullTitle": "Tranquilo Matcha Cart Functionality should display the cart with added products",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Iterate over each search term from fixture data\nsearchTerms.forEach(searchTerm => {\n  cy.get(_selectors.Selectors.popupModal, {\n    timeout: 10000\n  }).type(`${searchTerm}{enter}`);\n  cy.get(_selectors.Selectors.searchResultsList, {\n    timeout: 10000\n  }).last().click();\n  cy.get(_selectors.Selectors.productAddToCartButton, {\n    timeout: 10000\n  }).scrollIntoView().should('be.visible').click();\n  // Wait for the \"Add to Cart\" button to be visible and then click it\n  cy.get(_selectors.Selectors.productAddToCartButton, {\n    timeout: 10000\n  }).scrollIntoView().should('be.visible').click();\n  // Wait for the cart count to update and assert it has increased\n  cy.get(_selectors.Selectors.cartIconBubble, {\n    timeout: 10000\n  }).should('be.visible') // Ensure the cart icon is visible\n  .should('not.have.text', '0').click();\n});",
+              "err": {},
+              "uuid": "3f290ee1-6ab5-464e-a393-227cb2a51dea",
+              "parentUUID": "9dc49def-1e49-492d-af6a-43e92adee8a2",
+              "isHook": false,
+              "skipped": true
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "3a67cf55-5c9d-471d-8a9d-563ab69a16c7"
+          ],
+          "pending": [],
+          "skipped": [
+            "ad741cc1-4c62-4231-9fd7-337635b1d1f0",
+            "4938a935-da98-498e-a6df-e7c04451a04a",
+            "494e5aa1-f060-44e1-96f0-4216f3a88669",
+            "3f290ee1-6ab5-464e-a393-227cb2a51dea"
+          ],
+          "duration": 11426,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

@@ -1,0 +1,178 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 0,
+    "pending": 0,
+    "failures": 4,
+    "start": "2024-11-20T13:55:53.146Z",
+    "end": "2024-11-20T13:56:07.857Z",
+    "duration": 14711,
+    "testsRegistered": 4,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "02a56ba8-27f5-4774-8ffd-697b9aebae1c",
+      "title": "",
+      "fullFile": "cypress/e2e/search.cy.js",
+      "file": "cypress/e2e/search.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "bd4460ed-5eb0-4965-bd56-3c054c9e3cb7",
+          "title": "Tranquilo Matcha Search Functionality",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should display the search bar",
+              "fullTitle": "Tranquilo Matcha Search Functionality should display the search bar",
+              "timedOut": null,
+              "duration": 1106,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// If the search bar isn't found, manually log and throw error to fail the test\ncy.get(_selectors.Selectors.searchBar, {\n  timeout: 100000\n}).should('be.visible').then(() => {\n  cy.log('✅ Search bar is visible');\n}).catch(error => {\n  cy.log('❌ Failed to find search bar:', error.message);\n  throw new Error('Search bar not visible or accessible.');\n});\ncy.pause(); // Pause here to inspect if the test is failing",
+              "err": {
+                "message": "TypeError: cy.get(...).should(...).then(...).catch is not a function",
+                "estack": "TypeError: cy.get(...).should(...).then(...).catch is not a function\n    at Context.eval (webpack://shopify/./cypress/e2e/search.cy.js:33:20)",
+                "diff": null
+              },
+              "uuid": "19e5bb12-bfa8-48f6-a75e-44274c200465",
+              "parentUUID": "bd4460ed-5eb0-4965-bd56-3c054c9e3cb7",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should allow users to search for a product",
+              "fullTitle": "Tranquilo Matcha Search Functionality should allow users to search for a product",
+              "timedOut": null,
+              "duration": 1262,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "searchTerms.forEach(term => {\n  cy.get(_selectors.Selectors.searchBar, {\n    timeout: 100000\n  }).should('be.visible').then(() => {\n    cy.log(`✅ Search bar is visible for search term \"${term}\"`);\n  }).catch(error => {\n    cy.log(`❌ Search bar not visible for term \"${term}\":`, error.message);\n    throw new Error(`Search bar visibility failed for \"${term}\"`);\n  });\n  cy.get(_selectors.Selectors.popupModal, {\n    timeout: 500000\n  }).type(`${term}{enter}`, {\n    delay: 2000\n  }).then(() => {\n    cy.log(`🔎 Searching for \"${term}\"`);\n  }).catch(error => {\n    cy.log(`❌ Failed to type or search for \"${term}\":`, error.message);\n    throw new Error(`Search for term \"${term}\" failed`);\n  });\n  cy.pause();\n});",
+              "err": {
+                "message": "TypeError: cy.get(...).should(...).then(...).catch is not a function",
+                "estack": "TypeError: cy.get(...).should(...).then(...).catch is not a function\n    at eval (webpack://shopify/./cypress/e2e/search.cy.js:47:24)\n    at Context.eval (webpack://shopify/./cypress/e2e/search.cy.js:41:20)",
+                "diff": null
+              },
+              "uuid": "b187ecbe-44d3-412a-abb3-39968403a271",
+              "parentUUID": "bd4460ed-5eb0-4965-bd56-3c054c9e3cb7",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should display the list of search results",
+              "fullTitle": "Tranquilo Matcha Search Functionality should display the list of search results",
+              "timedOut": null,
+              "duration": 1115,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "searchTerms.forEach(term => {\n  cy.get(_selectors.Selectors.searchBar, {\n    timeout: 100000\n  }).should('be.visible').type(`${term}{enter}`, {\n    delay: 2000\n  }).catch(error => {\n    cy.log(`❌ Failed to interact with search bar for term \"${term}\":`, error.message);\n    throw new Error(`Search bar interaction failed for \"${term}\"`);\n  });\n  cy.get(_selectors.Selectors.popupModal, {\n    timeout: 50000\n  }).type(`${term}{enter}`).catch(error => {\n    cy.log(`❌ Failed to type in popup modal for \"${term}\":`, error.message);\n    throw new Error(`Popup modal typing failed for \"${term}\"`);\n  });\n  cy.get(_selectors.Selectors.searchResultsList, {\n    timeout: 20000\n  }).should('have.length.greaterThan', 0).then(results => {\n    cy.log(`✅ Search results for \"${term}\" displayed, count: ${results.length}`);\n  }).catch(error => {\n    cy.log(`❌ No search results found for \"${term}\":`, error.message);\n    throw new Error(`No search results for \"${term}\"`);\n  });\n  cy.pause(); // Pause here to inspect the results\n});",
+              "err": {
+                "message": "TypeError: cy.get(...).should(...).type(...).catch is not a function",
+                "estack": "TypeError: cy.get(...).should(...).type(...).catch is not a function\n    at eval (webpack://shopify/./cypress/e2e/search.cy.js:71:24)\n    at Context.eval (webpack://shopify/./cypress/e2e/search.cy.js:67:20)",
+                "diff": null
+              },
+              "uuid": "a3cb6e1d-c78b-4af2-9fd9-de900a4093c3",
+              "parentUUID": "bd4460ed-5eb0-4965-bd56-3c054c9e3cb7",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should navigate to the product page",
+              "fullTitle": "Tranquilo Matcha Search Functionality should navigate to the product page",
+              "timedOut": null,
+              "duration": 1097,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "searchTerms.forEach(term => {\n  cy.get(_selectors.Selectors.searchBar, {\n    timeout: 100000\n  }).should('be.visible').type(`${term}{enter}`, {\n    delay: 2000\n  }).catch(error => {\n    cy.log(`❌ Failed to interact with search bar for term \"${term}\":`, error.message);\n    throw new Error(`Failed to type in search bar for \"${term}\"`);\n  });\n  cy.get(_selectors.Selectors.popupModal, {\n    timeout: 50000\n  }).type(`${term}{enter}`).catch(error => {\n    cy.log(`❌ Failed to type in popup modal for \"${term}\":`, error.message);\n    throw new Error(`Failed to search in popup modal for \"${term}\"`);\n  });\n  cy.get(_selectors.Selectors.firstSearchResult, {\n    timeout: 50000\n  }).should('be.visible').click().then(() => {\n    cy.log(`✅ Clicked first search result for \"${term}\"`);\n  }).catch(error => {\n    cy.log(`❌ Failed to click first search result for \"${term}\":`, error.message);\n    throw new Error(`Failed to click search result for \"${term}\"`);\n  });\n  cy.url().should('include', '/products/').then(() => {\n    cy.log(`✅ Successfully navigated to product page for \"${term}\"`);\n  }).catch(error => {\n    cy.log(`❌ Failed to navigate to product page for \"${term}\":`, error.message);\n    throw new Error(`Failed to navigate to product page for \"${term}\"`);\n  });\n  cy.pause(); // Pause here to debug navigation issues\n});",
+              "err": {
+                "message": "TypeError: cy.get(...).should(...).type(...).catch is not a function",
+                "estack": "TypeError: cy.get(...).should(...).type(...).catch is not a function\n    at eval (webpack://shopify/./cypress/e2e/search.cy.js:102:24)\n    at Context.eval (webpack://shopify/./cypress/e2e/search.cy.js:98:20)",
+                "diff": null
+              },
+              "uuid": "3d015167-a525-4cab-9e2d-a27218ba6f3b",
+              "parentUUID": "bd4460ed-5eb0-4965-bd56-3c054c9e3cb7",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "19e5bb12-bfa8-48f6-a75e-44274c200465",
+            "b187ecbe-44d3-412a-abb3-39968403a271",
+            "a3cb6e1d-c78b-4af2-9fd9-de900a4093c3",
+            "3d015167-a525-4cab-9e2d-a27218ba6f3b"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 4580,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

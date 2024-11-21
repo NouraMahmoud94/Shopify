@@ -1,0 +1,181 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2024-11-21T16:31:02.958Z",
+    "end": "2024-11-21T16:31:10.114Z",
+    "duration": 7156,
+    "testsRegistered": 5,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "ef5a59d9-a606-4e17-ad6f-2706a9665c39",
+      "title": "",
+      "fullFile": "cypress/e2e/Home.cy.js",
+      "file": "cypress/e2e/Home.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "8a7230cf-8d01-4b20-90a4-4d2528092219",
+          "title": "Homepage and Navigation Tests",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should load the homepage successfully",
+              "fullTitle": "Homepage and Navigation Tests should load the homepage successfully",
+              "timedOut": null,
+              "duration": 1666,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Ensure the homepage logo is visible, indicating the page has loaded\ncy.get(_selectors.Selectors.logo, {\n  timeout: 10000\n}) // Added timeout\n.should('be.visible').then(() => {\n  try {\n    cy.log('✅ Home page is visible successfully');\n  } catch (error) {\n    cy.log('❌ Failed to verify homepage visibility');\n    throw error; // Rethrow the error to fail the test\n  }\n});\ncy.pause();",
+              "err": {},
+              "uuid": "8007dbe5-4f32-4c9c-80af-e107a62ba93a",
+              "parentUUID": "8a7230cf-8d01-4b20-90a4-4d2528092219",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should display the search input",
+              "fullTitle": "Homepage and Navigation Tests should display the search input",
+              "timedOut": null,
+              "duration": 766,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Check that the search bar is visible\ncy.get(_selectors.Selectors.searchBar, {\n  timeout: 10000\n}) // Added timeout\n.should('be.visible').then(() => {\n  try {\n    cy.log('✅ Search input is visible');\n  } catch (error) {\n    cy.log('❌ Failed to verify search input visibility');\n    throw error;\n  }\n});\ncy.pause(); // Pause to inspect the search bar visibility",
+              "err": {},
+              "uuid": "549692f9-4fb5-491b-832b-88860d719302",
+              "parentUUID": "8a7230cf-8d01-4b20-90a4-4d2528092219",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should navigate to the Shop page when tab is clicked",
+              "fullTitle": "Homepage and Navigation Tests should navigate to the Shop page when tab is clicked",
+              "timedOut": null,
+              "duration": 1155,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Click on the Shop navigation tab\ncy.get(_selectors.Selectors.navTabs, {\n  timeout: 10000\n}).click().then(() => {\n  try {\n    cy.log('✅ Clicked on the Shop navigation tab');\n  } catch (error) {\n    cy.log('❌ Failed to click on the Shop navigation tab');\n    throw error;\n  }\n});\n// Verify the URL\ncy.url({\n  timeout: 10000\n}).should('include', 'shop').then(() => {\n  try {\n    cy.log('✅ Successfully navigated to the Shop page');\n  } catch (error) {\n    cy.log('❌ Failed to verify navigation to the Shop page');\n    throw error;\n  }\n});\ncy.pause();",
+              "err": {},
+              "uuid": "03643a0b-660f-4bcb-ba76-cafcb046507a",
+              "parentUUID": "8a7230cf-8d01-4b20-90a4-4d2528092219",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should load more content when scrolling down",
+              "fullTitle": "Homepage and Navigation Tests should load more content when scrolling down",
+              "timedOut": null,
+              "duration": 744,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Scroll to the bottom of the page to trigger more content loading\ncy.scrollTo('bottom', {\n  timeout: 10000\n}).then(() => {\n  try {\n    cy.log('✅ Scrolled to the bottom to load more content');\n  } catch (error) {\n    cy.log('❌ Failed to scroll to the bottom');\n    throw error;\n  }\n});\ncy.pause();",
+              "err": {},
+              "uuid": "05925c45-0f8c-493f-99c5-9c3070a0b094",
+              "parentUUID": "8a7230cf-8d01-4b20-90a4-4d2528092219",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should be able to navigate to different pages",
+              "fullTitle": "Homepage and Navigation Tests should be able to navigate to different pages",
+              "timedOut": null,
+              "duration": 2721,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Click on a navigation tab and verify the URL\ncy.get(_selectors.Selectors.navTabs, {\n  timeout: 10000\n}).click().then(() => {\n  try {\n    cy.log('✅ Clicked on the navigation tab');\n  } catch (error) {\n    cy.log('❌ Failed to click on the navigation tab');\n    throw error;\n  }\n});\ncy.url({\n  timeout: 10000\n}).should('include', '/collections/shop').then(() => {\n  try {\n    cy.log('✅ Successfully navigated to the collections/shop page');\n  } catch (error) {\n    cy.log('❌ Failed to verify navigation to collections/shop page');\n    throw error;\n  }\n});\n// Navigate back to the previous page (homepage)\ncy.go('back', {\n  timeout: 10000\n}).then(() => {\n  try {\n    cy.log('✅ Navigated back to the homepage');\n  } catch (error) {\n    cy.log('❌ Failed to navigate back to the homepage');\n    throw error;\n  }\n});\ncy.pause();",
+              "err": {},
+              "uuid": "a11d0fe5-36d6-4bd3-87b7-2cd696198aa2",
+              "parentUUID": "8a7230cf-8d01-4b20-90a4-4d2528092219",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "8007dbe5-4f32-4c9c-80af-e107a62ba93a",
+            "549692f9-4fb5-491b-832b-88860d719302",
+            "03643a0b-660f-4bcb-ba76-cafcb046507a",
+            "05925c45-0f8c-493f-99c5-9c3070a0b094",
+            "a11d0fe5-36d6-4bd3-87b7-2cd696198aa2"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 7052,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
