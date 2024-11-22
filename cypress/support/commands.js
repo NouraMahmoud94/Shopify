@@ -3,7 +3,7 @@ Cypress.Commands.add('handleCookiesAndPopups', () => {
   cy.get('#shopify-pc__banner__btn-accept', { timeout: 10000 })
         .should('be.visible')
         .click();
-
+pause();
     // Check for Free Matcha Popup and remove it if it exists
     cy.get('body').then(($body) => {
         if ($body.find('#one-click-popup-13553372974531').length > 0) {
